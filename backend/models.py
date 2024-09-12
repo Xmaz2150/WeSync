@@ -38,6 +38,7 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
 
 
+
 # New Checkout/Order class
 class Order(db.Model):
     """

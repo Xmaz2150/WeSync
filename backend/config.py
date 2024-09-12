@@ -5,9 +5,9 @@ import os
 class Config:
     # Configures the database URI.
     # It first checks for an environment variable 'DATABASE_URL'.
-    # If not found,it defaults to using local SQLite database ('shop_ease.db').
+    # If not found, it defaults to using a local PostgreSQL database
     SQLALCHEMY_DATABASE_URI = os.getenv(
-        'DATABASE_URL') or 'sqlite:///shop_ease.db'
+        'DATABASE_URL', 'postgresql://nanakzy:ShopEase@localhost/shop_ease')
     # Disables tracking modifications of objects to save memory and improve
     # performance.
     SQLALCHEMY_TRACK_MODIFICATIONS = False

@@ -13,7 +13,12 @@ def register():
     if not username or not email or not password:
         return jsonify({"message": "Invalid data!"}), 400
 
-    new_user = User(username=username, email=email)
+    if data.get('flag') == 'su':
+        role = 'admin'
+    else:
+        role = 'user'
+
+    new_user = User(username=username, email=email, role=role)
     new_user.set_password(password)
     db.session.add(new_user)
     db.session.commit()
@@ -31,7 +36,20 @@ def login():
 
     user = User.query.filter_by(email=email).first()
     if user and user.check_password(password):
-        access_token = create_access_token(identity=user)
+        additional_claims = {'role': user.role}
+        access_token = create_access_token(
+            identity=user,
+            additional_claims=additional_claims
+        )
         return jsonify(access_token=access_token), 200
 
     return jsonify({"message": "Invalid credentials!"}), 401
+
+@user_views.route("/profile", methods=["GET"])
+@jwt_required()
+def protected():
+    return jsonify(
+        id=current_user.id,
+        username=current_user.username,
+        role=current_user.role,
+    )

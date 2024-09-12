@@ -1,5 +1,6 @@
 from flask import request, jsonify
-from models.models import User, db
+from models import storage
+from models.models import User
 from flask_jwt_extended import create_access_token, jwt_required, current_user
 from views import user_views 
 
@@ -20,8 +21,10 @@ def register():
 
     new_user = User(username=username, email=email, role=role)
     new_user.set_password(password)
-    db.session.add(new_user)
-    db.session.commit()
+
+    new_user.save()
+    # or
+    # storage.new(new_user)
 
     return jsonify({"message": "User registered successfully!"}), 201
 
@@ -34,7 +37,8 @@ def login():
     if not email or not password:
         return jsonify({"message": "Invalid data!"}), 400
 
-    user = User.query.filter_by(email=email).first()
+    # user = User.query.filter_by(email=email).first()
+    user = storage.get(User, email=email)
     if user and user.check_password(password):
         additional_claims = {'role': user.role}
         access_token = create_access_token(

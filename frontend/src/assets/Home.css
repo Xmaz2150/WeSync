@@ -1,0 +1,36 @@
+/* assets/Home.css */
+
+/* Basic styling for the home page */
+.home {
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.home-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.home-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.home-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.home-section {
+    margin-bottom: 20px;
+}
+
+.home-section h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.home-section p {
+    font-size: 1rem;
+    line-height: 1.5;
+}

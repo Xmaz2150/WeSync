@@ -11,7 +11,7 @@ class BaseModel:
     """Base class for all models, defining common attributes."""
     id = Column(String(60), primary_key=True, default=lambda: str(uuid.uuid4()))
     created_at = Column(String(60), default=datetime.utcnow)
-    updated_at = Column(String(60), default=datetime.utcnow, onupdate=datetime.utcnow)
+    updated_at = Column(String(60) , default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def save(self):
         """Saves the object to the database"""
@@ -25,9 +25,20 @@ class BaseModel:
     def to_dict(self):
         """Returns a dictionary representation of the object"""
         obj_dict = self.__dict__.copy()
-        obj_dict['created_at'] = self.created_at.isoformat()
+        '''obj_dict['created_at'] = self.created_at.isoformat()
         obj_dict['updated_at'] = self.updated_at.isoformat()
-        obj_dict['__class__'] = self.__class__.__name__
+        obj_dict['__class__'] = self.__class__.__name__'''
+
         if "_sa_instance_state" in obj_dict:
             del obj_dict["_sa_instance_state"]
+
+        if 'created_at' in obj_dict:
+            del obj_dict['created_at']
+        
+        if 'updated_at' in obj_dict:
+            del obj_dict['updated_at']
+        
+        if '__class__' in obj_dict:
+            del obj_dict['__class__']
+
         return obj_dict

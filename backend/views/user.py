@@ -26,7 +26,7 @@ def register():
     # or
     # storage.new(new_user)
 
-    return jsonify({"message": "User registered successfully!"}), 201
+    return jsonify({"message": "User {} registered successfully!".format(new_user.id)}), 201
 
 
 @user_views.route('/login', methods=['POST'])

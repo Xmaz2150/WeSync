@@ -40,16 +40,33 @@ class DBStorage:
         # Drop tables if in test mode
         if SEASE_ENV == "test":
             Base.metadata.drop_all(self.__engine)
+            from config import init_categories
 
-    def all(self, cls=None):
+            init_categories()
+
+
+    def all(self, cls=None, category=None):
         """Query all objects of a certain class or all classes"""
+        category_id = None
+        if category:
+            categories = self.__session.query(Category).all()
+            category_id = [c.id for c in categories if c.name == category]
+
+            if len(category_id) > 0:
+                category_id = category_id[0]
+
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
                 objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
-                    new_dict[key] = obj
+                    if category_id:
+                        if hasattr(obj, 'category_id'):
+                            if obj.category_id == category_id:
+                                new_dict[key] = obj
+                    else:
+                        new_dict[key] = obj
         return new_dict
 
     def new(self, obj):
@@ -84,9 +101,14 @@ class DBStorage:
         key = list(kwargs.items())[0][0]
         all_cls = models.storage.all(cls)
 
+
         for value in all_cls.values():
+
             if key == 'id':
                 if value.id == kwargs.get(key):
+                    return value
+            elif key == 'name':
+                if value.name == kwargs.get(key):
                     return value
             else:
                 if value.email == kwargs.get(key):

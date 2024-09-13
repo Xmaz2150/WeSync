@@ -2,7 +2,7 @@ from flask import Flask
 from views import shop_views
 from views import user_views
 from models import storage
-from models.models import User
+from models.models import User, Category
 from flask_jwt_extended import JWTManager
 
 

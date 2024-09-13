@@ -4,6 +4,7 @@ DBStorage class for PostgreSQL
 """
 
 import models
+from config.settings import Config
 from models.base import Base
 from models.models import User, Product, Order, OrderItem, Category, Review
 from os import getenv
@@ -27,22 +28,12 @@ class DBStorage:
 
     def __init__(self):
         """Instantiate a DBStorage object"""
-        SEASE_PGSQL_USER = 'postgres' # getenv('SEASE_PGSQL_USER')
-        SEASE_PGSQL_PWD = 'root' # getenv('SEASE_PGSQL_PWD') 
-        SEASE_PGSQL_HOST = 'localhost' # getenv('SEASE_PGSQL_HOST')
-        SEASE_PGSQL_DB = 'shopease' # getenv('SEASE_PGSQL_DB')
-        SEASE_ENV = getenv('SEASE_ENV')
 
-        self.__engine = create_engine('postgresql+psycopg2://{}:{}@{}/{}'.format(
-            SEASE_PGSQL_USER, SEASE_PGSQL_PWD, SEASE_PGSQL_HOST, SEASE_PGSQL_DB
-        ))
+        self.__engine = create_engine(Config.POSTGRESQL_DATABASE_URI)
 
         # Drop tables if in test mode
-        if SEASE_ENV == "test":
+        if Config.SEASE_ENV == "test":
             Base.metadata.drop_all(self.__engine)
-            from config import init_categories
-
-            init_categories()
 
 
     def all(self, cls=None, category=None):

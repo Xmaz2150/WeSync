@@ -63,7 +63,7 @@ class Product(BaseModel, Base):
     price = Column(Float, nullable=False)
     brand = Column(String(50))
     stock_quantity = Column(Integer, nullable=False)
-    # image_path = db.Column(db.String(128), nullable=False)
+    image_url = Column(String(128), nullable=False)
 
     category_id = Column(String(60), ForeignKey('categories.id'), nullable=False)
     reviews = relationship('Review', backref='product')

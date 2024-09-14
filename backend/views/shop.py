@@ -1,5 +1,6 @@
 from flask import jsonify, request
 from models import storage
+from utils.file import upload_file, rename_file
 from models.models import Product, Category
 from views import shop_views
 from flask_jwt_extended import jwt_required, get_jwt
@@ -26,13 +27,14 @@ def get_products():
 @role_required('admin')
 def protected():
     ''' Adds new productus to database '''
-    data = request.get_json()
-    name = data.get('name')
-    description = data.get('description')
-    price = data.get('price')
-    brand = data.get('brand')
-    stock_quantity = data.get('stock_quantity')
-    category =  data.get('category')
+    
+    file = request.files['file']
+    name = request.form.get('name')
+    description = request.form.get('description')
+    price = request.form.get('price')
+    brand = request.form.get('brand')
+    stock_quantity = request.form.get('stock_quantity')
+    category = request.form.get('category')
 
     if not name or not description or not price \
         or not brand or not stock_quantity \
@@ -48,8 +50,18 @@ def protected():
         category_id=storage.get(Category, name=category).id
     )
 
+    image_path = upload_file(file)
+    new_product.image_url = image_path
     new_product.save()
+    
+    ''' Workaround to make image_url saveable with correct url'''
+    product_update = storage.get(Product, id=new_product.id)
+    product_update.image_url = '{}.{}'.format(new_product.id, image_path)
+    rename_file(image_path, product_update.image_url)
+    product_update.save()
+
     return jsonify({'Successfully created PRODUCT': {
         'id': new_product.id,
-        'name': new_product.name
+        'name': new_product.name,
+        'image_url': product_update.image_url
     }}), 201

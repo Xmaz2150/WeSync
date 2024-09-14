@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from views import shop_views
 from views import user_views
 from models import storage
@@ -27,6 +27,10 @@ def user_lookup_callback(_jwt_header, jwt_data):
 if Config.SEASE_ENV == "test":
     from config.helpers import init_categories
     init_categories()
+
+@app.route('/SE/img/<filename>', methods=['GET'])
+def serve_image(filename):
+    return send_from_directory(Config.UPLOAD_FOLDER, filename)
 
 if __name__ == "__main__":
     app.run(debug=True)

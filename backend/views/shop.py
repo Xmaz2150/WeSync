@@ -1,6 +1,7 @@
 from flask import jsonify, request
 from models import storage
 from utils.file import upload_file, rename_file
+from config.settings import Config
 from models.models import Product, Category
 from views import shop_views
 from flask_jwt_extended import jwt_required, get_jwt
@@ -50,14 +51,15 @@ def protected():
         category_id=storage.get(Category, name=category).id
     )
 
-    image_path = upload_file(file)
-    new_product.image_url = image_path
+    image_name = upload_file(file)
+    new_product.image_url = image_name
     new_product.save()
     
     ''' Workaround to make image_url saveable with correct url'''
     product_update = storage.get(Product, id=new_product.id)
-    product_update.image_url = '{}.{}'.format(new_product.id, image_path)
-    rename_file(image_path, product_update.image_url)
+    url_prefix = Config.IMG_URL_PREFIX
+    product_update.image_url = '{}{}.{}'.format(url_prefix, new_product.id, image_name)
+    rename_file(image_name, '{}.{}'.format(new_product.id, image_name))
     product_update.save()
 
     return jsonify({'Successfully created PRODUCT': {

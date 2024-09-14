@@ -6,7 +6,7 @@ DBStorage class for PostgreSQL
 import models
 from config.settings import Config
 from models.base import Base
-from models.models import User, Product, Order, OrderItem, Category, Review
+from models.models import User, Product, Order, OrderItem, Category, Review, Cart, CartItem
 from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -18,7 +18,9 @@ classes = {
     "Order": Order,
     "OrderItem": OrderItem,
     "Category": Category,
-    "Review": Review
+    "Review": Review,
+    "Cart": Cart,
+    "CartItem": CartItem,
 }
 
 class DBStorage:
@@ -36,7 +38,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
 
-    def all(self, cls=None, category=None):
+    def all(self, cls=None, category=None, cart_id=None):
         """Query all objects of a certain class or all classes"""
         category_id = None
         if category:
@@ -55,6 +57,10 @@ class DBStorage:
                     if category_id:
                         if hasattr(obj, 'category_id'):
                             if obj.category_id == category_id:
+                                new_dict[key] = obj
+                    elif cart_id:
+                        if hasattr(obj, 'cart_id'):
+                            if obj.cart_id == cart_id:
                                 new_dict[key] = obj
                     else:
                         new_dict[key] = obj
@@ -100,6 +106,12 @@ class DBStorage:
                     return value
             elif key == 'name':
                 if value.name == kwargs.get(key):
+                    return value
+            elif key == 'user_id':
+                if value.user_id == kwargs.get(key):
+                    return value
+            elif key == 'product_id':
+                if value.product_id == kwargs.get(key):
                     return value
             else:
                 if value.email == kwargs.get(key):

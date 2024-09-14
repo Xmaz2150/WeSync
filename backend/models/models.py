@@ -32,7 +32,30 @@ class User(BaseModel, Base):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-   
+
+class Cart(BaseModel, Base):
+    __tablename__ = 'carts'
+    
+    user_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('users.id'), nullable=False)
+    items = relationship('CartItem', backref='cart')
+    
+    def __init__(self, *args, **kwargs):
+        """Initialize OrderItem with given arguments"""
+        super().__init__(*args, **kwargs)
+
+class CartItem(BaseModel, Base):
+    """CartItem class for tracking products in a cart"""
+    __tablename__ = 'cart_items'
+
+    cart_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('carts.id'), nullable=False)
+    product_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('products.id'), nullable=False)
+    quantity = Column(Integer, nullable=False)
+    price = Column(Float, nullable=False)
+
+    def __init__(self, *args, **kwargs):
+        """Initialize OrderItem with given arguments"""
+        super().__init__(*args, **kwargs)
+
 class Order(BaseModel, Base):
     __tablename__ = 'orders'
     

@@ -35,6 +35,7 @@ def login():
     email = data.get('email')
     password = data.get('password')
     if not email or not password:
+        print(email, ' ',password)
         return jsonify({"message": "Invalid data!"}), 400
 
     # user = User.query.filter_by(email=email).first()

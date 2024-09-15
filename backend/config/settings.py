@@ -2,8 +2,9 @@ from os import getenv
 
 class Config:
     SEASE_PGSQL_USER = getenv('SEASE_PGSQL_USER') or 'postgres'
-    SEASE_PGSQL_PWD = getenv('SEASE_PGSQL_PWD') or 'root'  
-    SEASE_PGSQL_HOST = getenv('SEASE_PGSQL_HOST') or 'localhost'
+    SEASE_PGSQL_PWD = getenv('SEASE_PGSQL_PWD') or 'root'
+    SEASE_PGSQL_HOST_PORT = getenv('SEASE_PGSQL_HOST_PORT') or '5432'
+    SEASE_PGSQL_HOST = getenv('SEASE_PGSQL_HOST') or 'localhost:{}'.format(SEASE_PGSQL_HOST_PORT)
     SEASE_PGSQL_DB = getenv('SEASE_PGSQL_DB') or 'shopease'
     SEASE_ENV = getenv('SEASE_ENV')
     POSTGRESQL_DATABASE_URI = getenv(

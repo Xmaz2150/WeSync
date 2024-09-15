@@ -18,17 +18,17 @@ Welcome consumer!!
 
 2. Install & Start PostgresSQL:
       ```
-      $ sudo apt update && sudo apt install postgresql postgresql-contrib && sudo systemctl start postgresql.service
+      $ sudo apt update && sudo apt install postgresql postgresql-contrib -y && sudo systemctl start postgresql.service
       ```
 3. Initialize Database:
 
      i. Create DB (Only if Starting from scratch):
       ```sh
-      $ psql -U postgres -h localhost -f create_db.sql
+      $ psql -U postgres -f create_db.sql
       ```
       ii. **OR** Load from dump to have som data beforehand:
       ```
-      $ pg_restore -U postgres -h localhost -d shopease shopease.dump
+      $ pg_restore -U postgres -d shopease shopease.dump
       ```
 
 

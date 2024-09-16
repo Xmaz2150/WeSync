@@ -11,6 +11,7 @@ class Config:
         'DATABASE_URL') or 'postgresql+psycopg2://{}:{}@{}/{}'.format(
             SEASE_PGSQL_USER, SEASE_PGSQL_PWD, SEASE_PGSQL_HOST, SEASE_PGSQL_DB
     )
+    IS_SU = getenv('IS_SU') or None
     SECRET_KEY = getenv('SECRET_KEY', 'supersecretkey')
     JWT_SECRET_KEY = getenv('JWT_SECRET_KEY', 'supersecretjwtkey')
 

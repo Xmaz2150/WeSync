@@ -13,7 +13,7 @@
     <style>
         body {
             background-color: #000; /* Deep black background */
-            background-image: url('images/Designer (1).jpeg');
+            background-image: url('frontend/src/assets/images/Background.jpg'); /* Background image */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -221,7 +221,7 @@
         <p class="slogan">Effortless Shopping, Endless Possibilities! 🛍️✨</p>
         <div class="icon-container">
             <i class="fas fa-user"></i> <!-- Sign In icon -->
-            <button id="showModal">Sign In/Sign Up</button> <!-- Sign In button -->
+            <button id="showModal">Login/Sign Up</button>
             <i class="fas fa-heart"></i>
             <i class="fas fa-shopping-bag"></i>
         </div>
@@ -399,7 +399,7 @@
 <div id="authModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" id="closeModal">&times;</span>
-        
+
         <!-- Login Form -->
         <form id="loginForm" class="auth-form">
             <h2>Login</h2>
@@ -407,7 +407,7 @@
                 <label for="loginEmail">Email:</label>
                 <input type="email" id="loginEmail" class="form-control" required placeholder="Enter your email">
             </div>
-            
+
             <div class="form-group">
                 <label for="loginPassword">Password:</label>
                 <input type="password" id="loginPassword" class="form-control" required placeholder="Enter your password">
@@ -415,9 +415,9 @@
             <button type="submit" class="btn btn-primary">Login</button>
             <p>Don't have an account? <a href="#" id="showSignup">Sign up here</a></p>
         </form>
-        
+
         <!-- Signup Form -->
-        <form id="signupForm" class="auth-form"> <!-- Add display:none for initial hiding -->
+        <form id="signupForm" class="auth-form" style="display:none;">
             <h2>Sign Up</h2>
             <div class="form-group">
                 <label for="signupEmail">Email:</label>
@@ -439,7 +439,7 @@
                 <label for="confirmPassword">Confirm Password:</label>
                 <input type="password" id="confirmPassword" required placeholder="Confirm your Password">
             </div>
-            <button type="submit">Sign Up</button>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
             <p>Already have an account? <a href="#" id="showLogin">Log in here</a></p>
         </form>
     </div>
@@ -487,7 +487,7 @@
     document.getElementById('signupForm').addEventListener('submit', function(event) {
         const password = document.getElementById('signupPassword').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
-        
+
         if (password !== confirmPassword) {
             event.preventDefault();
             alert('Passwords do not match!');

@@ -5,12 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShopEase</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400&display=swap" rel="stylesheet">
     <script src="/js/authHandler.js"></script>
+    <script src="script.js" defer></script>
     <style>
         body {
             background-color: #000; /* Deep black background */
+            background-image: url('images/Designer (1).jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             color: #fff; /* White text */
             font-family: Arial, sans-serif;
             margin: 0;
@@ -20,25 +27,23 @@
         header {
             background-color: #000; /* Match header background with body */
             color: #fff; /* White text */
-            padding: 10px;
+            padding: 20px;
             position: relative;
         }
         .header-text {
             font-family: 'Snapper Script', cursive; /* Snapper Script font */
-            font-size: 36px; /* Larger text size */
+            font-size: 65px; /* Larger text size */
             text-transform: uppercase; /* Uppercase text */
             margin: 0;
-            position: absolute;
-            top: 10px;
-            left: 10px;
+            z-index: 10;
+            display: inline-block;
         }
         .slogan {
             font-style: italic; /* Italic font for slogan */
-            font-size: 18px; /* Adjusted size for readability */
+            font-size: 30px; /* Adjusted size for readability */
             margin: 10px 0;
-            position: absolute;
-            top: 60px;
-            left: 10px;
+            display: block;
+            z-index: 10;
         }
         .icon-container {
             position: absolute;
@@ -58,7 +63,7 @@
             padding: 5px 0; /* Reduced padding */
             text-align: center;
             margin-top: 100px; /* Space below slogan */
-            font-size: 14px; /* Smaller font size */
+            font-size: 16px; /* Smaller font size */
             position: relative;
         }
         .nav-bar a {
@@ -182,6 +187,32 @@
             color: #333;
             text-decoration: underline;
         }
+        .icon-bar i {
+            font-size: 24px;
+            color: #ff0000; /* Red color for heart */
+            margin-right: 10px;
+        }
+        .product {
+        position: relative;
+        padding: 15px;
+        display: inline-block;
+        text-align: center;
+        }
+        .heart-icon {
+            color: gray;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .heart-icon.liked {
+            color: red; /* When liked, change the color to red */
+        }
+        .product {
+        position: relative;
+        padding: 15px;
+        display: inline-block;
+        text-align: center;
+    }
     </style>
 </head>
 <body>
@@ -190,7 +221,7 @@
         <p class="slogan">Effortless Shopping, Endless Possibilities! 🛍️✨</p>
         <div class="icon-container">
             <i class="fas fa-user"></i> <!-- Sign In icon -->
-            <button id="showModal">Sign In</button> <!-- Sign In button -->
+            <button id="showModal">Sign In/Sign Up</button> <!-- Sign In button -->
             <i class="fas fa-heart"></i>
             <i class="fas fa-shopping-bag"></i>
         </div>
@@ -205,21 +236,26 @@
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Sweater ,knit.jpeg" alt="Sweater, Knit">
                 <div class="description">Sweater, Knit</div>
                 <div class="price">$49.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="1"></i>
+
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/The Row.jpeg" alt="The Row Dress">
                 <div class="description">The Row Dress</div>
                 <div class="price">$129.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="2"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Vestido De Mujer.jpeg" alt="Vestido De Mujer">
                 <div class="description">Vestido De Mujer</div>
                 <div class="price">$89.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="3"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/NikeLab Apparel.jpeg" alt="NikeLab Apparel">
                 <div class="description">NikeLab Apparel</div>
                 <div class="price">$79.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="4"></i>
             </div>
         </div>
 
@@ -230,21 +266,25 @@
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/White sandals.jpeg" alt="White sandals">
                 <div class="description">White sandals</div>
                 <div class="price">$59.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="5"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Elegant Flats Black.jpeg" alt="Elegant Flats Black">
                 <div class="description">Elegant Flats Black</div>
                 <div class="price">$89.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="6"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Point Toe Heeled Pumps.jpeg" alt="Point Toe Heeled Pumps">
                 <div class="description">Point Toe Heeled Pumps</div>
                 <div class="price">$79.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="7"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Sandalias.jpeg" alt="Sandalias">
                 <div class="description">Red Sandalias</div>
                 <div class="price">$99.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="8"></i>
             </div>
         </div>
         <a href="#">HANDBAGS</a>
@@ -254,21 +294,25 @@
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Red Tote Bag.jpeg" alt="Red Tote Bag">
                 <div class="description">Red Tote Bag</div>
                 <div class="price">$88.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="9"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Woven Tote Bag.jpeg" alt="Woven Tote Bag">
                 <div class="description">Woven Tote Bag</div>
                 <div class="price">$69.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="10"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Leather Crossbody Bag.jpeg" alt="Leather Crossbody Bag">
                 <div class="description">Leather Crossbody Bag</div>
                 <div class="price">$99.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="11"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Capacity Tote Shoulder Bag.jpeg" alt="Capacity Tote Shoulder Bag">
                 <div class="description">Capacity Tote Shoulder Bag</div>
                 <div class="price">$89.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="12"></i>
             </div>
         </div>
         <a href="#">JEWELLERY & ACCESSORIES</a>
@@ -278,21 +322,25 @@
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Gold Neckpiece.jpeg" alt="Gold Neckpiece">
                 <div class="description">Gold Neckpiece</div>
                 <div class="price">$44.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="13"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Iconic Bangle Watch - Silver-Tone.jpeg" alt="Iconic Bangle Watch - Silver-Tone">
                 <div class="description">Iconic Bangle Watch - Silver-Tone</div>
                 <div class="price">$99.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="14"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Rectangle Flat Gold Earrings.jpeg" alt="Rectangle Flat Gold Earrings">
                 <div class="description">Rectangle Flat Gold Earrings</div>
                 <div class="price">$75.00</div>
+                <i class="fas fa-heart heart-icon" data-product-id="15"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Red Etruria Ring.jpeg" alt="Red Etruria Ring">
                 <div class="description">Red Etruria Ring</div>
                 <div class="price">$49.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="16"></i>
             </div>
         </div>
         <a href="#">BEAUTY & HEALTH</a>
@@ -302,16 +350,19 @@
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/N24 REVIVING HAND CREAM.jpeg" alt="N24 Reviving Hand Cream">
                 <div class="description">N24 Reviving Hand Cream</div>
                 <div class="price">$39.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="17"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Kydra Botanique.jpeg" alt="Kyra Botanique">
                 <div class="description">Kydra Botanique</div>
                 <div class="price">$65.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="18"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Narciso - AMBREE.jpeg" alt="Narciso - AMBREE">
                 <div class="description">Narciso - AMBREE</div>
                 <div class="price">$69.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="19"></i>
             </div>
         </div>
         <a href="#">HOME & GIFTS</a>
@@ -321,30 +372,35 @@
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Choc Gift Hamper.jpeg" alt="Choc Gift Hamper">
                 <div class="description">Choc Gift Hamper</div>
                 <div class="price">$109.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="20"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Creative Bridemaid Proposal Gifts.jpeg" alt="Creative Bridemaid Proposal Gifts">
                 <div class="description">Creative Bridemaid Proposal Gifts</div>
                 <div class="price">$99.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="21"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/House warming gift hamper.jpeg" alt="House warming gift hamper">
                 <div class="description">House warming gift hamper</div>
                 <div class="price">$69.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="22"></i>
             </div>
             <div class="product">
                 <img src="C:/Users/hp/Desktop/ShopEase/frontend/src/assets/images/Full Length Mirror.jpeg" alt="Full Length Mirror">
                 <div class="description">Full Length Mirror</div>
                 <div class="price">$119.99</div>
+                <i class="fas fa-heart heart-icon" data-product-id="23"></i>
             </div>
         </div>
     </nav>
 
   <!-- Login/Signup Modal -->
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeModal">&times;</span>
-            
+<div id="authModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeModal">&times;</span>
+        
+        <!-- Login Form -->
         <form id="loginForm" class="auth-form">
             <h2>Login</h2>
             <div class="form-group">
@@ -354,65 +410,89 @@
             
             <div class="form-group">
                 <label for="loginPassword">Password:</label>
-                <input type="password"  
-                id="loginPassword" class="form-control"  
-                required placeholder="Enter your password">
+                <input type="password" id="loginPassword" class="form-control" required placeholder="Enter your password">
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
             <p>Don't have an account? <a href="#" id="showSignup">Sign up here</a></p>
         </form>
-            
-            <!-- Signup Form -->
-            <form id="signupForm" class="auth-form" style="display:none;">
-                <h2>Sign Up</h2>
+        
+        <!-- Signup Form -->
+        <form id="signupForm" class="auth-form"> <!-- Add display:none for initial hiding -->
+            <h2>Sign Up</h2>
+            <div class="form-group">
                 <label for="signupEmail">Email:</label>
                 <input type="email" id="signupEmail" required placeholder="Enter email">
+            </div>
+            <div class="form-group">
                 <label for="signupName">Name:</label>
                 <input type="text" id="signupName" required placeholder="Enter your Name">
+            </div>
+            <div class="form-group">
                 <label for="signupSurname">Surname:</label>
                 <input type="text" id="signupSurname" required placeholder="Enter your Surname">
+            </div>
+            <div class="form-group">
                 <label for="signupPassword">Password:</label>
                 <input type="password" id="signupPassword" required placeholder="Enter your Password">
+            </div>
+            <div class="form-group">
                 <label for="confirmPassword">Confirm Password:</label>
                 <input type="password" id="confirmPassword" required placeholder="Confirm your Password">
-                <button type="submit">Sign Up</button>
-                <p>Already have an account? <a href="#" id="showLogin">Log in here</a></p>
-            </form>
-        </div>
+            </div>
+            <button type="submit">Sign Up</button>
+            <p>Already have an account? <a href="#" id="showLogin">Log in here</a></p>
+        </form>
     </div>
+</div>
 
-    <footer>
-        <p>&copy; 2024 ShopEase. All rights reserved.</p>
-    </footer>
+<!-- Footer -->
+<footer>
+    <p>&copy; 2024 ShopEase. All rights reserved.</p>
+    <p>Privacy Policy | Terms & Conditions</p>
+</footer>
 
-    <script>
-        // JavaScript to handle modal display
-        document.getElementById('showModal').addEventListener('click', function() {
-            document.getElementById('authModal').style.display = 'block';
-        });
+<script>
+    // Open Modal (Add a trigger element with id="showModal")
+    document.getElementById('showModal')?.addEventListener('click', function() {
+        document.getElementById('authModal').style.display = 'block';
+    });
 
-        document.getElementById('closeModal').addEventListener('click', function() {
+    // Close Modal
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('authModal').style.display = 'none';
+    });
+
+    // Switch to Signup Form
+    document.getElementById('showSignup').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('signupForm').style.display = 'block';
+    });
+
+    // Switch to Login Form
+    document.getElementById('showLogin').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('signupForm').style.display = 'none';
+        document.getElementById('loginForm').style.display = 'block';
+    });
+
+    // Close modal if clicking outside the modal content
+    window.addEventListener('click', function(event) {
+        if (event.target === document.getElementById('authModal')) {
             document.getElementById('authModal').style.display = 'none';
-        });
+        }
+    });
 
-        document.getElementById('showSignup').addEventListener('click', function(event) {
+    // Password confirmation logic
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+        const password = document.getElementById('signupPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        
+        if (password !== confirmPassword) {
             event.preventDefault();
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('signupForm').style.display = 'block';
-        });
-
-        document.getElementById('showLogin').addEventListener('click', function(event) {
-            event.preventDefault();
-            document.getElementById('signupForm').style.display = 'none';
-            document.getElementById('loginForm').style.display = 'block';
-        });
-
-        // Close modal if clicking outside the modal content
-        window.addEventListener('click', function(event) {
-            if (event.target === document.getElementById('authModal')) {
-                document.getElementById('authModal').style.display = 'none';
-            }
-        });
-    </script>
+            alert('Passwords do not match!');
+        }
+    });
+</script>
 </body>
 </html>

@@ -62,11 +62,11 @@ def upload_product():
     rename_file(image_name, '{}.{}'.format(new_product.id, image_name))
     product_update.save()
 
-    return jsonify({'Successfully created PRODUCT': {
+    return jsonify({
         'id': new_product.id,
         'name': new_product.name,
         'image_url': product_update.image_url
-    }}), 201
+    }), 201
 
 
 @shop_views.route('/cart', methods=['GET'])
@@ -118,14 +118,15 @@ def add_to_cart():
             price=product.price
         )
         new_item.save()
+        return jsonify(new_item.to_dict()), 201
     
-    if hasattr(cart_item, 'quantity'):
+    if hasattr(cart_item, 'quantity') and hasattr(cart_item, 'save') \
+        and hasattr(cart_item, 'to_dict'):
         cart_item.quantity += quantity
-
-    print('----', isinstance(cart_item, CartItem), '-----')
-    cart_item.save()
+        cart_item.save() 
+        return jsonify(cart_item.to_dict()), 201
     
-    return jsonify({'New PRODUCT added to cart': cart_item.to_dict()}), 201
+    return jsonify({"message": "Could not add item to cart!"}), 400
 
 @shop_views.route('/cart/remove', methods=['POST'])
 @jwt_required()
@@ -171,4 +172,4 @@ def remove_from_cart():
     cart_item.save()
     
     
-    return jsonify({'Updated PRODUCT in cart': cart_item.to_dict()}), 200
+    return jsonify(cart_item.to_dict()), 200

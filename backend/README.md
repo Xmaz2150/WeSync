@@ -115,7 +115,7 @@ Welcome consumer!!
 #### Some Or All
 - **Endpoint:** `/shop/products`
 - **Method:** `GET`
-- **Description:** Retrieves products by category/ all if not provided.
+- **Description:** Retrieves products by category all if not provided(ALL must be specified).
 - **Request:**
     ```sh
     http POST :5000/shop/product 

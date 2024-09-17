@@ -84,7 +84,11 @@ def upload_product(token, product_data, image_file_path):
         response = requests.post(NEW_PRODUCT_URL, headers=headers, files=files, data=product_data)
         upload = list(list(json.loads(response.text).items())[0])[1]
         # clean_upload = 
+<<<<<<< HEAD
         print(f"Upload {product_data['name']}: {upload['image_url']}")
+=======
+        #rint(f"Upload {product_data['name']}: {upload['image_url']}")
+>>>>>>> b3c69bca5c59c6b9336449ca495b4708c3f79329
 
 
 def main():

@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, jsonify
 from views import shop_views
 from views import user_views
 from models import storage
@@ -30,7 +30,7 @@ if Config.SEASE_ENV == "test":
 
 @app.route('/')
 def home():
-    return "Welcome to SEASE"
+    return jsonify('Welcome to ShopEase API')
 
 @app.route('/SE/img/<filename>', methods=['GET'])
 def serve_image(filename):

@@ -1,9 +1,10 @@
 from typing import cast
-from flask import jsonify, request
+from flask import jsonify, request, redirect, url_for
 from models import storage
 from utils.file import upload_file, rename_file
 from config.settings import Config
-from models.models import BaseModel, Product, Category, Cart, CartItem
+from datetime import datetime
+from models.models import BaseModel, Product, Category, Cart, CartItem, Order, OrderItem
 from views import shop_views
 from flask_jwt_extended import jwt_required, get_jwt, current_user
 from views.helpers import role_required
@@ -75,10 +76,10 @@ def get_cart():
     ''' Gets all items in cart for specific user '''
     cart = storage.get(Cart, user_id=current_user.id)
     if not cart:
-        return jsonify({"message": "Cart does not exist!"}), 404
+        return jsonify({"message": "Error loading cart!"}), 404
     
-    cart_items = storage.all(CartItem, None, cart.id)
-    cart_items = [p.to_dict() for key, p in storage.all(CartItem, None, cart.id).items()]
+    cart_items = storage.all(CartItem, None, cart_id=cart.id)
+    cart_items = [p.to_dict() for key, p in storage.all(CartItem, None, cart_id=cart.id).items()]
     print(len(cart_items))
     
     return jsonify({'Cart': cart_items})
@@ -173,3 +174,54 @@ def remove_from_cart():
     
     
     return jsonify(cart_item.to_dict()), 200
+
+@shop_views.route('/checkout', methods=['GET'])
+@jwt_required()
+def checkout():
+    ''' Completes purchase and creates order'''
+    cart = storage.get(Cart, user_id=current_user.id)
+    if not cart:
+        return jsonify({"message": "Error loading cart!"}), 404
+    
+    cart_items = storage.all(CartItem, None, cart_id=cart.id)
+    if not cart_items:
+        return jsonify({"message": "Cart is empty!"}), 400
+    
+    new_order = Order(
+        user_id=current_user.id,
+        order_date=datetime.now().isoformat(),
+        total_price=0
+    )
+    new_order.save()
+    total_price = 0
+
+    for key, item in cart_items.items():
+        product = storage.get(Product, id=item.product_id)
+        if not product:
+            continue
+        new_order_item = OrderItem(
+            order_id=new_order.id,
+            product_id=item.product_id,
+            quantity=item.quantity,
+            price=item.price
+        )
+        total_price += item.price * item.quantity
+        new_order_item.save()
+    
+    new_order.total_price = total_price
+    new_order.save()
+    storage.delete(cart)
+    storage.save()
+
+    return jsonify(new_order.to_dict()), 201
+
+@shop_views.route('/orderhistory', methods=['GET'])
+@jwt_required()
+def order_history():
+    ''' Gets all orders for specific user '''
+    orders = storage.all(Order, None, current_user=current_user.id)
+    if not orders:
+        return jsonify({"message": "No orders found!"}), 404
+    
+    orders = [p.to_dict() for key, p in orders.items()]
+    return jsonify({'Orders': orders}), 200

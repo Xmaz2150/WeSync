@@ -28,6 +28,10 @@ if Config.SEASE_ENV == "test":
     from config.helpers import init_categories
     init_categories()
 
+@app.route('/')
+def home():
+    return "Welcome to SEASE"
+
 @app.route('/SE/img/<filename>', methods=['GET'])
 def serve_image(filename):
     return send_from_directory(Config.UPLOAD_FOLDER, filename)

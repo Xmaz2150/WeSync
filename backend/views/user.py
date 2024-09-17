@@ -18,6 +18,7 @@ def register():
     if not username or not email or not password:
         return jsonify({"message": "Invalid data!"}), 400
 
+    print(data.get('flag'))
     if data.get('flag') == Config.IS_SU:
         role = 'admin'
     else:

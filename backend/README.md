@@ -133,7 +133,7 @@ Welcome consumer!!
 - **Description:** Gets users cart.
 - **Request:**
     ```sh
-    http -f POST :5000/shop/cart \
+    http POST :5000/shop/cart \
     	Authorization:"Bearer $JWT"
     ```
 
@@ -161,6 +161,27 @@ Welcome consumer!!
   	    Content-Type:application/json \
   	    product_id=product_id
       	quantity=qty
+    ```
+### Purchase
+
+#### Checkout
+- **Endpoint:** `/shop/checkout`
+- **Method:** `GET`
+- **Description:** Completes purchase.
+- **Request:**
+    ```sh
+    http GET :5000/shop/checkout \
+    	Authorization:"Bearer $JWT"
+    ```
+
+#### History
+- **Endpoint:** `/shop/orderhistory`
+- **Method:** `GET`
+- **Description:** Shows users purchase history.
+- **Request:**
+    ```sh
+    http GET :5000/shop/orderhistory \
+    	Authorization:"Bearer $JWT"
     ```
 ## Testing
 

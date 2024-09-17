@@ -183,9 +183,14 @@ Welcome consumer!!
     http GET :5000/shop/orderhistory \
     	Authorization:"Bearer $JWT"
     ```
-## Testing
 
-1. Run the tests:
+## Image Server
+
+### Get
+- **Endpoint:** `/SE/img/<filename>`
+- **Method:** `GET`
+- **Description:** Gets image.
+- **Request:**
     ```sh
-    python main.py
+    http GET :5000/SE/img/<filename> 
     ```

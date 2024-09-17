@@ -9,8 +9,9 @@ from views import shop_views
 from flask_jwt_extended import jwt_required, get_jwt, current_user
 from views.helpers import role_required
 
-@jwt_required()
+
 @shop_views.route('/products', methods=['GET'])
+@jwt_required(optional=True)
 def get_products():
     ''' Gets all the users by category all if not specified '''
     data = request.get_json()

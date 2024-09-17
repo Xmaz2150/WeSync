@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, jsonify
 from views import shop_views
 from views import user_views
 from models import storage
@@ -28,9 +28,24 @@ if Config.SEASE_ENV == "test":
     from config.helpers import init_categories
     init_categories()
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return jsonify({ "Page not found": 404 })
+
+@app.errorhandler(405)
+def method_not_allowed(e):
+    return jsonify({ "Method not allowed": 405 })
+
+@app.route('/')
+def home():
+    return jsonify('Welcome to ShopEase API')
+
 @app.route('/SE/img/<filename>', methods=['GET'])
 def serve_image(filename):
-    return send_from_directory(Config.UPLOAD_FOLDER, filename)
+    try:
+        return send_from_directory(Config.UPLOAD_FOLDER, filename)
+    except:
+        return jsonify({"message": "Image not found!"}), 404
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0")

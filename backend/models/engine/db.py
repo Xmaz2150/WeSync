@@ -38,7 +38,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
 
-    def all(self, cls=None, category=None, cart_id=None):
+    def all(self, cls=None, category=None, **kwargs):
         """Query all objects of a certain class or all classes"""
         category_id = None
         if category:
@@ -47,6 +47,11 @@ class DBStorage:
 
             if len(category_id) > 0:
                 category_id = category_id[0]
+
+        if kwargs:
+            key = list(kwargs.items())[0][0]
+        else:
+            key = None
 
         new_dict = {}
         for clss in classes:
@@ -58,9 +63,13 @@ class DBStorage:
                         if hasattr(obj, 'category_id'):
                             if obj.category_id == category_id:
                                 new_dict[key] = obj
-                    elif cart_id:
+                    elif key == 'cart_id':
                         if hasattr(obj, 'cart_id'):
-                            if obj.cart_id == cart_id:
+                            if obj.cart_id == 'cart_id':
+                                new_dict[key] = obj
+                    elif key == 'user_id':
+                        if hasattr(obj, 'user_id'):
+                            if obj.user_id == 'cart_id':
                                 new_dict[key] = obj
                     else:
                         new_dict[key] = obj

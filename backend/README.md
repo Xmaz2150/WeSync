@@ -133,7 +133,7 @@ Welcome consumer!!
 - **Description:** Gets users cart.
 - **Request:**
     ```sh
-    http -f POST :5000/shop/cart \
+    http POST :5000/shop/cart \
     	Authorization:"Bearer $JWT"
     ```
 
@@ -162,9 +162,35 @@ Welcome consumer!!
   	    product_id=product_id
       	quantity=qty
     ```
-## Testing
+### Purchase
 
-1. Run the tests:
+#### Checkout
+- **Endpoint:** `/shop/checkout`
+- **Method:** `GET`
+- **Description:** Completes purchase.
+- **Request:**
     ```sh
-    python main.py
+    http GET :5000/shop/checkout \
+    	Authorization:"Bearer $JWT"
+    ```
+
+#### History
+- **Endpoint:** `/shop/orderhistory`
+- **Method:** `GET`
+- **Description:** Shows users purchase history.
+- **Request:**
+    ```sh
+    http GET :5000/shop/orderhistory \
+    	Authorization:"Bearer $JWT"
+    ```
+
+## Image Server
+
+### Get
+- **Endpoint:** `/SE/img/<filename>`
+- **Method:** `GET`
+- **Description:** Gets image.
+- **Request:**
+    ```sh
+    http GET :5000/SE/img/<filename> 
     ```

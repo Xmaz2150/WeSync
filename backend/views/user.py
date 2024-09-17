@@ -1,6 +1,7 @@
 from flask import request, jsonify
 from models import storage
 from models.models import User
+from config.settings import Config
 from flask_jwt_extended import create_access_token, jwt_required, current_user
 from views import user_views 
 
@@ -11,10 +12,14 @@ def register():
     username = data.get('username')
     email = data.get('email')
     password = data.get('password')
+    if storage.get(User, email=email):
+        return jsonify({"message": "User already exists"}), 400
+
     if not username or not email or not password:
         return jsonify({"message": "Invalid data!"}), 400
 
-    if data.get('flag') == 'su':
+    print(data.get('flag'))
+    if data.get('flag') == Config.IS_SU:
         role = 'admin'
     else:
         role = 'user'
@@ -23,8 +28,6 @@ def register():
     new_user.set_password(password)
 
     new_user.save()
-    # or
-    # storage.new(new_user)
 
     return jsonify({"message": "User {} registered successfully!".format(new_user.id)}), 201
 
@@ -38,7 +41,6 @@ def login():
         print(email, ' ',password)
         return jsonify({"message": "Invalid data!"}), 400
 
-    # user = User.query.filter_by(email=email).first()
     user = storage.get(User, email=email)
     if user and user.check_password(password):
         additional_claims = {'role': user.role}
@@ -52,7 +54,7 @@ def login():
 
 @user_views.route("/profile", methods=["GET"])
 @jwt_required()
-def protected():
+def get_profile():
     return jsonify(
         id=current_user.id,
         username=current_user.username,

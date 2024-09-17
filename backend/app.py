@@ -32,6 +32,10 @@ if Config.SEASE_ENV == "test":
 def page_not_found(e):
     return jsonify({ "Page not found": 404 })
 
+@app.errorhandler(415)
+def method_not_allowed(e):
+    return jsonify({ "Unsupported Media Type": 415 })
+
 @app.errorhandler(405)
 def method_not_allowed(e):
     return jsonify({ "Method not allowed": 405 })

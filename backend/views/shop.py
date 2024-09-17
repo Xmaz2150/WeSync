@@ -17,8 +17,21 @@ from views import shop_views
 from flask_jwt_extended import jwt_required, get_jwt, current_user
 from views.helpers import role_required
 
-@jwt_required()
+PRODUCT_CATEGORIES = [
+    'Clothing',
+    'Shoes',
+    'Electronics',
+    'Books',
+    'Games',
+    'Beauty_Health',
+    'Food_And_Beverage',
+    'Hand_Bags',
+    'Jewellery_And_Accessories',
+    'Home_And_Gifts'
+]
+
 @shop_views.route('/products', methods=['GET'])
+@jwt_required(optional=True)
 def get_products():
     ''' Gets all the users by category all if not specified '''
     data = request.get_json()
@@ -27,10 +40,13 @@ def get_products():
     if not category:
         return jsonify({"message": "Invalid data!"}), 400
 
-    products = [p.to_dict() for key, p in storage.all(Product, category, None).items()]
+    products = [p.to_dict() for key, p in storage.all(Product, category).items()]
 
     if category == 'ALL':
         return jsonify({ 'All products': products})
+    elif category not in PRODUCT_CATEGORIES:
+        return jsonify({"message": "Invalid category!"}), 400
+
     return jsonify({ category: products})
 
 @shop_views.route('/product', methods=['POST'])

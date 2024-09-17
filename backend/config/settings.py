@@ -16,5 +16,5 @@ class Config:
     JWT_SECRET_KEY = getenv('JWT_SECRET_KEY', 'supersecretjwtkey')
 
     UPLOAD_FOLDER = getenv('UPLOAD_PATH') or 'static/uploads/images'
-    IMG_URL_PREFIX = 'http://localhost:5000/SE/img/'
+    IMG_URL_PREFIX = '/SE/img/'
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}

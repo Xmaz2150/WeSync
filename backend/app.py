@@ -30,11 +30,11 @@ if Config.SEASE_ENV == "test":
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return jsonify({ "Page not found", 404 })
+    return jsonify({ "Page not found": 404 })
 
 @app.errorhandler(405)
 def method_not_allowed(e):
-    return jsonify({ "Method not allowed", 405 })
+    return jsonify({ "Method not allowed": 405 })
 
 @app.route('/')
 def home():

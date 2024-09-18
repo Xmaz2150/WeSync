@@ -1,1 +1,1 @@
-# Welcome to ShopEase
+# Welcome to WeSync

@@ -1,7 +1,7 @@
 from flask import Blueprint
 
-shop_views = Blueprint('shop_views', __name__, url_prefix='/shop')
-user_views = Blueprint('user_views', __name__)
+platform_views = Blueprint('platform_views', __name__, url_prefix='/social')
+user_views = Blueprint('user_views', __name__, url_prefix='/wesync')
 
-from views.shop import *
+from views.social import *
 from views.user import *

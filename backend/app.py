@@ -1,5 +1,5 @@
 from flask import Flask, send_from_directory, jsonify
-from views import shop_views
+from views import platform_views
 from views import user_views
 from models import storage
 from models.models import User
@@ -8,7 +8,7 @@ from flask_jwt_extended import JWTManager
 
 
 app = Flask(__name__)
-app.register_blueprint(shop_views)
+app.register_blueprint(platform_views)
 app.register_blueprint(user_views)
 
 app.config.from_object('config.settings.Config')
@@ -24,10 +24,6 @@ def user_lookup_callback(_jwt_header, jwt_data):
     identity = jwt_data["sub"]
     return storage.get(User, id=identity)
 
-if Config.SEASE_ENV == "test":
-    from config.helpers import init_categories
-    init_categories()
-
 @app.errorhandler(404)
 def page_not_found(e):
     return jsonify({ "Page not found": 404 })
@@ -42,9 +38,9 @@ def method_not_allowed(e):
 
 @app.route('/')
 def home():
-    return jsonify('Welcome to ShopEase API')
+    return jsonify('Welcome to WeSync API')
 
-@app.route('/SE/img/<filename>', methods=['GET'])
+@app.route('/wesync/<filename>', methods=['GET'])
 def serve_image(filename):
     try:
         return send_from_directory(Config.UPLOAD_FOLDER, filename)

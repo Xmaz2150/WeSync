@@ -1,7 +1,7 @@
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from sqlalchemy import Column, String, ForeignKey, Integer, Float, Text
+from sqlalchemy import Column, String, ForeignKey, Text
 from models.base import BaseModel, Base
 
 NAME = 200
@@ -11,17 +11,22 @@ SHORT_TEXT = 150
 SHORT_SHORT_TEXT = 50
 
 class User(BaseModel, Base):
-    """User class for e-commerce platform"""
+    """ User model """
     __tablename__ = 'users'
 
-    username = Column(String(NAME), nullable=False)
+    username = Column(String(NAME), nullable=False, unique=True)
     email = Column(String(EMAIL), nullable=False, unique=True)
     password_hash = Column(String(LONG_TEXT), nullable=False)
     phone = Column(String(SHORT_SHORT_TEXT), nullable=True)
     role = Column(String(SHORT_SHORT_TEXT), nullable=False)
-    address = Column(String(SHORT_TEXT), nullable=True)
+    image_url = Column(String(LONG_TEXT), nullable=True)
 
-    orders = relationship('Order', backref='user', cascade='all, delete-orphan')
+    posts = relationship('Post', backref='author', lazy=True)
+    comments = relationship('Comment', backref='author', lazy=True)
+    likes = relationship('Like', backref='user', lazy=True)
+    followers = relationship('Follow', foreign_keys='Follow.followed_id', backref='followed', lazy=True)
+    following = relationship('Follow', foreign_keys='Follow.follower_id', backref='follower', lazy=True)
+
 
     def __init__(self, *args, **kwargs):
         """Initialize user with given arguments"""
@@ -33,106 +38,48 @@ class User(BaseModel, Base):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-class Cart(BaseModel, Base):
-    __tablename__ = 'carts'
-    
+class Follow(BaseModel, Base):
+    __tablename__ = 'follows'
+
+    follower_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('users.id'), nullable=False)
+    followed_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('users.id'), nullable=False)
+
+    def __init__(self, *args, **kwargs):
+        """Initialize user with given arguments"""
+        super().__init__(*args, **kwargs)
+
+class Post(BaseModel, Base):
+    __tablename__ = 'posts'
+
+    content = Column(Text, nullable=False)
+
     user_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('users.id'), nullable=False)
-<<<<<<< HEAD
-    items = relationship('CartItem', backref='cart')
-=======
-    items = relationship('CartItem', backref='cart', cascade='all, delete, delete-orphan')
->>>>>>> b3c69bca5c59c6b9336449ca495b4708c3f79329
-    
-    def __init__(self, *args, **kwargs):
-        """Initialize OrderItem with given arguments"""
-        super().__init__(*args, **kwargs)
-
-class CartItem(BaseModel, Base):
-    """CartItem class for tracking products in a cart"""
-    __tablename__ = 'cart_items'
-
-    cart_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('carts.id'), nullable=False)
-    product_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('products.id'), nullable=False)
-    quantity = Column(Integer, nullable=False)
-    price = Column(Float, nullable=False)
+    comments = relationship('Comment', backref='post', lazy=True)
+    likes = relationship('Like', backref='post', lazy=True)
+    image_url = Column(String(LONG_TEXT), nullable=True)
 
     def __init__(self, *args, **kwargs):
         """Initialize OrderItem with given arguments"""
         super().__init__(*args, **kwargs)
 
-class Order(BaseModel, Base):
-    __tablename__ = 'orders'
-    
+class Comment(BaseModel, Base):
+    __tablename__ = 'comments'
+
+    content = Column(Text, nullable=False)
+    image_url = Column(String(LONG_TEXT), nullable=True)
+
     user_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('users.id'), nullable=False)
-    order_date = Column(String(SHORT_TEXT), nullable=False)
-    total_price = Column(Float, nullable=False)
-
-<<<<<<< HEAD
-    items = relationship('OrderItem', backref='order')
-=======
-    items = relationship('OrderItem', backref='order', cascade='all, delete, delete-orphan')
->>>>>>> b3c69bca5c59c6b9336449ca495b4708c3f79329
+    post_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('posts.id'), nullable=False)
 
     def __init__(self, *args, **kwargs):
-        """Initialize OrderItem with given arguments"""
+        """Initialize Review with given arguments"""
         super().__init__(*args, **kwargs)
 
-class OrderItem(BaseModel, Base):
-    """OrderItem class for tracking items in an order"""
-    __tablename__ = 'order_items'
+class Like(BaseModel, Base):
+    __tablename__ = 'likes'
 
-    order_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('orders.id'), nullable=False)
-    product_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('products.id'), nullable=False)
-    quantity = Column(Integer, nullable=False)
-    price = Column(Float, nullable=False)
-
-    def __init__(self, *args, **kwargs):
-        """Initialize OrderItem with given arguments"""
-        super().__init__(*args, **kwargs)
-
-class Product(BaseModel, Base):
-    __tablename__ = 'products'
-    
-    name = Column(String(NAME), nullable=False)
-    description = Column(String(LONG_TEXT))
-    price = Column(Float, nullable=False)
-    brand = Column(String(SHORT_TEXT))
-    stock_quantity = Column(Integer, nullable=False)
-    image_url = Column(String(LONG_TEXT), nullable=False)
-
-    category_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('categories.id'), nullable=False)
-    reviews = relationship('Review', backref='product')
-
-    def __init__(self, *args, **kwargs):
-        """Initialize OrderItem with given arguments"""
-        super().__init__(*args, **kwargs)
-
-class Category(BaseModel, Base):
-    """Category class for categorizing products"""
-    __tablename__ = 'categories'
-
-    name = Column(String(NAME), nullable=False)
-
-    products = relationship('Product', backref='category')
-
-    def __init__(self, *args, **kwargs):
-        """Initialize Category with given arguments"""
-        super().__init__(*args, **kwargs)
-
-class Review(BaseModel, Base):
-    """Review class for product reviews"""
-    __tablename__ = 'reviews'
-
-    product_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('products.id'), nullable=False)
     user_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('users.id'), nullable=False)
-
-    # Test Text
-    review_text = Column(Text, nullable=False)
-    rating = Column(Integer, nullable=False)
-    review_date = Column(String(SHORT_TEXT), nullable=False)
-
-    # product = relationship('Product', back_populates='reviews')
-    user = relationship('User')
+    post_id = Column(String(SHORT_SHORT_TEXT), ForeignKey('posts.id'), nullable=False)
 
     def __init__(self, *args, **kwargs):
         """Initialize Review with given arguments"""

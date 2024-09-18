@@ -6,7 +6,7 @@ DBStorage class for PostgreSQL
 import models
 from config.settings import Config
 from models.base import Base
-from models.models import User, Product, Order, OrderItem, Category, Review, Cart, CartItem
+from models.models import User, Follow, Post, Comment, Like
 from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -14,13 +14,10 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 # Add all models to this dictionary
 classes = {
     "User": User,
-    "Product": Product,
-    "Order": Order,
-    "OrderItem": OrderItem,
-    "Category": Category,
-    "Review": Review,
-    "Cart": Cart,
-    "CartItem": CartItem,
+    "Follow": Follow,
+    "Post": Post,
+    "Comment": Comment,
+    "Like": Like,
 }
 
 class DBStorage:
@@ -34,15 +31,10 @@ class DBStorage:
         self.__engine = create_engine(Config.POSTGRESQL_DATABASE_URI)
 
         # Drop tables if in test mode
-        if Config.SEASE_ENV == "test":
+        if Config.WSYNC_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
-
-<<<<<<< HEAD
-    def all(self, cls=None, category=None, cart_id=None):
-=======
     def all(self, cls=None, category=None, **kwargs):
->>>>>>> b3c69bca5c59c6b9336449ca495b4708c3f79329
         """Query all objects of a certain class or all classes"""
         category_id = None
         if category:
@@ -52,14 +44,11 @@ class DBStorage:
             if len(category_id) > 0:
                 category_id = category_id[0]
 
-<<<<<<< HEAD
-=======
         if kwargs:
             key = list(kwargs.items())[0][0]
         else:
             key = None
 
->>>>>>> b3c69bca5c59c6b9336449ca495b4708c3f79329
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
@@ -70,11 +59,7 @@ class DBStorage:
                         if hasattr(obj, 'category_id'):
                             if obj.category_id == category_id:
                                 new_dict[key] = obj
-<<<<<<< HEAD
-                    elif cart_id:
-                        if hasattr(obj, 'cart_id'):
-                            if obj.cart_id == cart_id:
-=======
+
                     elif key == 'cart_id':
                         if hasattr(obj, 'cart_id'):
                             if obj.cart_id == 'cart_id':
@@ -82,7 +67,6 @@ class DBStorage:
                     elif key == 'user_id':
                         if hasattr(obj, 'user_id'):
                             if obj.user_id == 'cart_id':
->>>>>>> b3c69bca5c59c6b9336449ca495b4708c3f79329
                                 new_dict[key] = obj
                     else:
                         new_dict[key] = obj

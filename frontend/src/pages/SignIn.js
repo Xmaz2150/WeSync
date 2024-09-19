@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { login } from '../utils/api';
+import SignInForm from '../components/SignInForm';
 
 const Login = ({ setToken }) => {
   const [email, setEmail] = useState('');
@@ -24,29 +25,14 @@ const Login = ({ setToken }) => {
 
   return (
     <div>
-      <h2>Sign In</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Sign In</button>
-      </form>
+      <SignInForm
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        handleSubmit={handleSubmit}
+        error={error}
+      />
     </div>
   );
 };

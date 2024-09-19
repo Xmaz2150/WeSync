@@ -5,9 +5,15 @@ from models import storage
 from models.models import User
 from config.settings import Config
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
+CORS(app,
+  resources={r'/*': {'origins': '*'}},
+  supports_credentials=True
+)
+
 app.register_blueprint(platform_views)
 app.register_blueprint(user_views)
 
@@ -26,15 +32,15 @@ def user_lookup_callback(_jwt_header, jwt_data):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return jsonify({ "Page not found": 404 })
+    return jsonify({ "Page not found": 404 }), 404
 
 @app.errorhandler(415)
 def method_not_allowed(e):
-    return jsonify({ "Unsupported Media Type": 415 })
+    return jsonify({ "Unsupported Media Type": 415 }), 415
 
 @app.errorhandler(405)
 def method_not_allowed(e):
-    return jsonify({ "Method not allowed": 405 })
+    return jsonify({ "Method not allowed": 405 }), 405
 
 @app.route('/')
 def home():

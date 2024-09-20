@@ -6,14 +6,16 @@ import Feed from "./pages/Feed";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Sidebar
- from "./components/SideBar";
+from "./components/SideBar";
 import PrivateRoute from "./components/PrivateRoute";
+import '../src/assets/css/custom-styles.css';
+
 
 function App() {
   const [token, setToken] = React.useState(localStorage.getItem('token'));
 
   return (
-    <div className="app-container d-flex">
+    <div className="app-container d-flex general-style">
       { token && <Sidebar token={token} setToken={setToken} /> }
       <Routes>
         <Route path="/" element={<Home />} />

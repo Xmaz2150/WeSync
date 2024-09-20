@@ -70,7 +70,7 @@ const Sidebar = ({ token, setToken }) => {
           </div>
         </div>
 
-        <div className="b-example-divider b-example-vr"></div>
+  
       </main>
     </>
   );

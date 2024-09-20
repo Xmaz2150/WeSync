@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import '../assets/css/sign-in.css';
 import '../assets/css/custom-styles.css';
 
@@ -36,6 +38,7 @@ const SignInForm = ({ email, setEmail, password, setPassword, handleSubmit, erro
 
           <button className="btn btn-primary w-100 py-2" type="submit">Sign in</button>
           {error && <p className="text-danger mt-3">{error}</p>}
+          <p className="mt-3">Don't have an account? <Link to="/signup">Sign up</Link></p>
           <p className="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>
         </form>
       </main>

@@ -110,8 +110,8 @@ class DBStorage:
             if key == 'id':
                 if value.id == kwargs.get(key):
                     return value
-            elif key == 'name':
-                if value.name == kwargs.get(key):
+            elif key == 'username':
+                if value.username == kwargs.get(key):
                     return value
             elif key == 'user_id':
                 if value.user_id == kwargs.get(key):

@@ -20,6 +20,9 @@ def register():
 
     if storage.get(User, email=email):
         return jsonify({"message": "User already exists"}), 400
+    
+    if storage.get(User, username=username):
+        return jsonify({"message": "Username already taken"}), 400
 
     # Find creative way to sneak in the flag
     if request.form.get('flag') == Config.IS_SU:

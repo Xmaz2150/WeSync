@@ -61,6 +61,10 @@
     height: 100vh;
   }
 
-  .inside-elements {
-    
+  @media (min-width: 650px) {
+    .inside-elements {
+      width: 65%;
+      margin-bottom: 2%;
+    }  
   }
+  

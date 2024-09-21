@@ -77,8 +77,8 @@ def get_feed():
 def create_comment(post_id):
     ''' Adds new comment to a post '''
 
-    file = request.files['file']
-    content = request.form.get('content')
+    data = request.get_json()
+    content = data.get('content')
 
     if not post_id or not content:
         return jsonify({"message": "Invalid data!"}), 400

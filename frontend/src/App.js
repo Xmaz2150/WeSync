@@ -5,6 +5,7 @@ import Profile from "./pages/Profile";
 import Feed from "./pages/Feed";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import NewComment from "./pages/NewComment";
 import Sidebar
 from "./components/SideBar";
 import PrivateRoute from "./components/PrivateRoute";
@@ -23,6 +24,7 @@ function App() {
         <Route path="/signup" element={<SignUp setToken={setToken}/>} />
         <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
         <Route path="/feed" element={<PrivateRoute><Feed /></PrivateRoute>} />
+        <Route path="/newcomment/:postId" element={<PrivateRoute><NewComment /></PrivateRoute>} />
       </Routes>
     </div>
   );

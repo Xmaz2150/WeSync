@@ -22,8 +22,14 @@ def get_stats():
 @jwt_required()
 def create_post():
     ''' Adds new post to database '''
-    file = request.files['file']
-    content = request.form.get('content')
+
+    if 'file' in request.files:
+        file = request.files['file']
+        content = request.form.get('content')
+    else:
+        data = request.get_json()
+        content = data.get('content')
+        file = None
 
     if not content:
         return jsonify({"message": "Invalid data!"}), 400
@@ -33,20 +39,22 @@ def create_post():
         content = content,
     )
 
-    image_name = upload_file(file)
-    new_post.image_url = image_name
-    new_post.save()
-    
-    ''' Workaround to make image_url saveable with correct url'''
-    post_update = storage.get(Post, id=new_post.id)
-    url_prefix = Config.IMG_URL_PREFIX
-    post_update.image_url = '{}{}.{}'.format(url_prefix, new_post.id, image_name)
-    rename_file(image_name, '{}.{}'.format(new_post.id, image_name))
-    post_update.save()
-
+    if file:
+        image_name = upload_file(file)
+        new_post.image_url = image_name
+        new_post.save()
+        
+        ''' Workaround to make image_url saveable with correct url'''
+        post_update = storage.get(Post, id=new_post.id)
+        url_prefix = Config.IMG_URL_PREFIX
+        post_update.image_url = '{}{}.{}'.format(url_prefix, new_post.id, image_name)
+        rename_file(image_name, '{}.{}'.format(new_post.id, image_name))
+        post_update.save()
+    else:
+        new_post.save()
 
     return jsonify({
-        'id': post_update.id,
+        'id': new_post.id,
     }), 201
 
 @platform_views.route('/feed', methods=['GET'])

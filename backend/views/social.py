@@ -92,18 +92,8 @@ def create_comment(post_id):
         post_id = post_id,
         content = content,
     )
-    
-    if file:
-        image_name = upload_file(file)
-        new_comment.image_url = image_name
-        new_comment.save()
-        
-        ''' Workaround to make image_url saveable with correct url'''
-        comment_update = storage.get(Post, id=new_comment.id)
-        url_prefix = Config.IMG_URL_PREFIX
-        comment_update.image_url = '{}{}.{}'.format(url_prefix, new_comment.id, image_name)
-        rename_file(image_name, '{}.{}'.format(new_comment.id, image_name))
-        comment_update.save()
+
+    new_comment.save()
 
     return jsonify({"message": "Comment added successfully!"}), 201
 

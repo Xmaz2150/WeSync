@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 const Feed = () => {
-  const [posts, setPosts] = React.useState([]);
+  const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,12 +19,18 @@ const Feed = () => {
         });
         setPosts(response.data);
       } catch (error) {
-        console.error('Error fetching feed:', error);
+        console.log('Error fetching feed:', error);
       }
     };
 
     fetchFeed();
   }, []);
+
+  if (!posts) {
+    return <div>
+      <h1>Loading...</h1>
+      </div>;
+  }
 
   const handleCommentClick = (postId) => {
     navigate(`/newcomment/${postId}`);

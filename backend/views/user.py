@@ -63,7 +63,7 @@ def login():
 def get_profile():
 
     likes = [l.to_dict() for l in storage.all(Like, user_id=current_user.id).values()]
-    posts = [p.to_dict() for p in storage.all(Post, user_id=current_user.id).values()]
+    posts = [p.to_dict() for p in storage.all(Post, user_id=current_user.id).values() if p.user_id == current_user.id]
     followers = [f.to_dict().get('follower_id') for f in storage.all(Follow, follower_id=current_user.id).values() if f.followed_id == current_user.id]
     following = [f.to_dict().get('followed_id') for f in storage.all(Follow, followed_id=current_user.id).values() if f.follower_id == current_user.id]
 

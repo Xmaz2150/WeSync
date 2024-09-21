@@ -7,6 +7,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import NewPost from "./pages/NewPost";
 import NewComment from "./pages/NewComment";
+import CommentsPage from "./pages/Comments";
 import Sidebar
 from "./components/SideBar";
 import PrivateRoute from "./components/PrivateRoute";
@@ -27,6 +28,7 @@ function App() {
         <Route path="/feed" element={<PrivateRoute><Feed /></PrivateRoute>} />
         <Route path="/newpost" element={<PrivateRoute><NewPost /></PrivateRoute>} />
         <Route path="/newcomment/:postId" element={<PrivateRoute><NewComment /></PrivateRoute>} />
+        <Route path="/comments/:postId" element={<PrivateRoute><CommentsPage /></PrivateRoute>} />
       </Routes>
     </div>
   );

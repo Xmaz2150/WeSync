@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react'; 
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import '../assets/css/feed.css';
 
 import axios from 'axios';
@@ -56,6 +56,9 @@ const Feed = () => {
             <div>
               <button className="btn btn-light btn-sm"><i className="bi bi-heart"></i> Like</button>
               <button className="btn btn-light btn-sm" onClick={() => handleCommentClick(post.id)}><i className="bi bi-chat"></i> Comment</button>
+              <Link to={`/comments/${post.id}`}>
+                <button className="btn btn-light btn-sm"><i className="bi bi-chat"></i> Comments</button>
+              </Link>
               <button className="btn btn-light btn-sm"><i className="bi bi-share"></i> Share</button>
             </div>
           </div>

@@ -116,9 +116,6 @@ class DBStorage:
             elif key == 'user_id':
                 if value.user_id == kwargs.get(key):
                     return value
-            elif key == 'product_id':
-                if value.product_id == kwargs.get(key):
-                    return value
             else:
                 if value.email == kwargs.get(key):
                     return value

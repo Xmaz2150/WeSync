@@ -7,7 +7,7 @@ from flask_jwt_extended import create_access_token, jwt_required, current_user
 from views import user_views 
 
 
-@user_views.route('/register', methods=['POST'])
+@user_views.route('/register', methods=['POST'], strict_slashes=False)
 def register():
     """ """
     data = request.get_json()
@@ -58,7 +58,7 @@ def login():
 
     return jsonify({"message": "Invalid credentials!"}), 401
 
-@user_views.route("/profile", methods=["GET"])
+@user_views.route("/profile", methods=["GET"], strict_slashes=False)
 @jwt_required()
 def get_profile():
     return jsonify(
@@ -69,4 +69,26 @@ def get_profile():
         posts=current_user.posts,
         followers=current_user.followers,
         following=current_user.following
+    )
+
+@user_views.route("/user/<user_id>", methods=["GET"], strict_slashes=False)
+@jwt_required()
+def get_user_profile(user_id):
+    """ """
+
+    if not user_id:
+        return jsonify({"message": "Invalid data!"}), 400
+    
+    user = storage.get(User, id=user_id)
+    if not user:
+        return jsonify({"message": "User not found!"}), 404
+    
+    return jsonify(
+        id=user.id,
+        username=user.username,
+        role=user.role,
+        likes=user.likes,
+        posts=user.posts,
+        followers=user.followers,
+        following=user.following
     )

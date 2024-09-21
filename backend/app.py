@@ -46,7 +46,7 @@ def method_not_allowed(e):
 def home():
     return jsonify('Welcome to WeSync API')
 
-@app.route('/wesync/<filename>', methods=['GET'])
+@app.route('/wesync/img/<filename>', methods=['GET'])
 def serve_image(filename):
     try:
         return send_from_directory(Config.UPLOAD_FOLDER, filename)

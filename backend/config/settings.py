@@ -19,6 +19,7 @@ class Config:
     IS_SU = getenv('IS_SU')
     SECRET_KEY = getenv('SECRET_KEY')
     JWT_SECRET_KEY = getenv('JWT_SECRET_KEY')
+    JWT_ACCESS_TOKEN_EXPIRES = getenv('JWT_ACCESS_TOKEN_EXPIRES', 86400)
 
     ''' Image Options '''
     UPLOAD_FOLDER = getenv('UPLOAD_PATH', 'static/uploads/images')

@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from models import storage
-from models.models import User
+from models.models import User, Like, Post, Comment, Follow
 
 from config.settings import Config
 from flask_jwt_extended import create_access_token, jwt_required, current_user
@@ -61,14 +61,21 @@ def login():
 @user_views.route("/profile", methods=["GET"], strict_slashes=False)
 @jwt_required()
 def get_profile():
+
+    likes = [l.to_dict() for l in storage.all(Like, user_id=current_user.id).values()]
+    posts = [p.to_dict() for p in storage.all(Post, user_id=current_user.id).values()]
+    followers = [f.to_dict().get('follower_id') for f in storage.all(Follow, follower_id=current_user.id).values() if f.followed_id == current_user.id]
+    following = [f.to_dict().get('followed_id') for f in storage.all(Follow, followed_id=current_user.id).values() if f.follower_id == current_user.id]
+
+
     return jsonify(
         id=current_user.id,
         username=current_user.username,
         role=current_user.role,
-        likes=current_user.likes,
-        posts=current_user.posts,
-        followers=current_user.followers,
-        following=current_user.following
+        likes=likes,
+        posts=posts,
+        followers=followers,
+        following=following
     )
 
 @user_views.route("/user/<user_id>", methods=["GET"], strict_slashes=False)
@@ -82,13 +89,18 @@ def get_user_profile(user_id):
     user = storage.get(User, id=user_id)
     if not user:
         return jsonify({"message": "User not found!"}), 404
-    
+
+    likes = [l.to_dict() for l in storage.all(Like, user_id=user.id).values()]
+    posts = [p.to_dict() for p in storage.all(Post, user_id=user.id).values()]
+    followers = [f.to_dict().get('follower_id') for f in storage.all(Follow, follower_id=user.id).values() if f.followed_id == user.id]
+    following = [f.to_dict().get('followed_id') for f in storage.all(Follow, followed_id=user.id).values() if f.follower_id == user.id]
+
     return jsonify(
         id=user.id,
         username=user.username,
         role=user.role,
-        likes=user.likes,
-        posts=user.posts,
-        followers=user.followers,
-        following=user.following
+        likes=likes,
+        posts=posts,
+        followers=followers,
+        following=following
     )

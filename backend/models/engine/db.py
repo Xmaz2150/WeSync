@@ -34,15 +34,8 @@ class DBStorage:
         if Config.WSYNC_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
-    def all(self, cls=None, category=None, **kwargs):
+    def all(self, cls=None, **kwargs):
         """Query all objects of a certain class or all classes"""
-        category_id = None
-        if category:
-            categories = self.__session.query(Category).all()
-            category_id = [c.id for c in categories if c.name == category]
-
-            if len(category_id) > 0:
-                category_id = category_id[0]
 
         if kwargs:
             key = list(kwargs.items())[0][0]
@@ -55,18 +48,17 @@ class DBStorage:
                 objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
-                    if category_id:
-                        if hasattr(obj, 'category_id'):
-                            if obj.category_id == category_id:
-                                new_dict[key] = obj
-
-                    elif key == 'cart_id':
-                        if hasattr(obj, 'cart_id'):
-                            if obj.cart_id == 'cart_id':
-                                new_dict[key] = obj
-                    elif key == 'user_id':
+                    if key == 'user_id':
                         if hasattr(obj, 'user_id'):
-                            if obj.user_id == 'cart_id':
+                            if obj.user_id == 'user_id':
+                                new_dict[key] = obj
+                    elif key == 'followed_id':
+                        if hasattr(obj, 'followed_id'):
+                            if obj.followed_id == 'followed_id':
+                                new_dict[key] = obj
+                    elif key == 'follower_id':
+                        if hasattr(obj, 'follower_id'):
+                            if obj.follower_id == 'follower_id':
                                 new_dict[key] = obj
                     else:
                         new_dict[key] = obj

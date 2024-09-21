@@ -105,6 +105,22 @@ def create_comment(post_id):
 
     return jsonify({"message": "Comment added successfully!"}), 201
 
+@platform_views.route('/posts/comments/<post_id>', methods=['GET'])
+@jwt_required()
+def get_comments(post_id):
+    ''' Gets all comments from a post '''
+
+    if not post_id:
+        return jsonify({"message": "Post not found!"}), 404
+    
+    post = storage.get(Post, id=post_id).to_dict()
+    comments = [c.to_dict() for c in storage.all(Comment, post_id=post_id).values() if c.post_id == post_id]
+
+    return jsonify({
+        'post': post,
+        'comments': comments,
+    }), 200
+
 @platform_views.route('/posts/like/<post_id>', methods=['POST'])
 @jwt_required()
 def like_post(post_id):

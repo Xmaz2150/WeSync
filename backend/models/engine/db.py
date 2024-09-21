@@ -60,6 +60,10 @@ class DBStorage:
                         if hasattr(obj, 'follower_id'):
                             if obj.follower_id == 'follower_id':
                                 new_dict[key] = obj
+                    elif key == 'post_id':
+                        if hasattr(obj, 'post_id'):
+                            if obj.post_id == 'post_id':
+                                new_dict[key] = obj
                     else:
                         new_dict[key] = obj
         return new_dict
@@ -107,6 +111,9 @@ class DBStorage:
                     return value
             elif key == 'user_id':
                 if value.user_id == kwargs.get(key):
+                    return value
+            elif key == 'post_id':
+                if value.post_id == kwargs.get(key):
                     return value
             else:
                 if value.email == kwargs.get(key):

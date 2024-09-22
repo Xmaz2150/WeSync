@@ -25,7 +25,7 @@ const Login = ({ setToken, setImageUrl }) => {
       window.location.href = '/profile';
     } catch (error) {
       console.log('Failed to sign in:', error);
-      setError('Failed to sign in. Please check your credentials and try again.');
+      setError(error.response ? error.response.data.message : 'An error occurred. Please try again later.');
     }
   };
 

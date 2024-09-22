@@ -31,10 +31,10 @@ function App() {
     <div className="app-container d-flex general-style">
       { token && <Sidebar token={token} setToken={setToken} imageUrl={imageUrl} setImageUrl={setImageUrl}/> }
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn setToken={setToken} setImageUrl={setImageUrl}/>} />
         <Route path="/signup" element={<SignUp setToken={setToken}/>} />
 
+        <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
         <Route path="/profile" element={<PrivateRoute><Profile imageUrl={imageUrl}/></PrivateRoute>} />
         <Route path="/user/:userId" element={<PrivateRoute><UserProfile /></PrivateRoute>} />
 
@@ -49,7 +49,7 @@ function App() {
         <Route path="/users/" element={<PrivateRoute><Users /></PrivateRoute>} />
         <Route path="/searchUsers/" element={<PrivateRoute><SearchUsers /></PrivateRoute>} />
 
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound statusCode={404} message={'Page not found!'}/>} />
       </Routes>
     </div>
   );

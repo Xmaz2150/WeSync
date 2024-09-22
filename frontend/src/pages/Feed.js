@@ -35,6 +35,20 @@ const Feed = () => {
   const handleCommentClick = (postId) => {
     navigate(`/newcomment/${postId}`);
   };
+
+  const handleLikeClick = async (postId) => {
+    try {
+      const response = await axios.post(`http://localhost:5000/social/posts/like/${postId}`, {}, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.log('Error fetching feed:', error.response.data);
+    }
+  }
   return (
     <div className="feed-container">
       <header className="feed-header">
@@ -59,7 +73,7 @@ const Feed = () => {
               {post.image_url && <img className="w-75" src={'http://localhost:5000/'+post.image_url} alt="Post" />}
             </p>
             <div>
-              <button className="btn btn-light btn-sm"><i className="bi bi-heart"></i> Like</button>
+              <button className="btn btn-light btn-sm" onClick={() => handleLikeClick(post.id)}><i className="bi bi-heart"></i> { (post.likes.length == 0) ? <>Like</> : <>Likes {post.likes.length}</> } </button>
               <button className="btn btn-light btn-sm" onClick={() => handleCommentClick(post.id)}><i className="bi bi-chat"></i> Comment</button>
               <Link to={`/comments/${post.id}`}>
                 <button className="btn btn-light btn-sm"><i className="bi bi-chat"></i> Comments</button>

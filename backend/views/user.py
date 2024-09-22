@@ -7,6 +7,10 @@ from flask_jwt_extended import create_access_token, jwt_required, current_user
 from views import user_views 
 
 
+"""
+    REGISTRATION & LOGIN
+"""
+
 @user_views.route('/register', methods=['POST'], strict_slashes=False)
 def register():
     """ """
@@ -61,6 +65,10 @@ def login():
 
     return jsonify({"message": "Invalid credentials!"}), 401
 
+
+"""
+    PROFILE(S)
+"""
 @user_views.route("/profile", methods=["GET"], strict_slashes=False)
 @jwt_required()
 def get_profile():

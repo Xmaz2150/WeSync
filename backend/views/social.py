@@ -10,7 +10,9 @@ from views import platform_views
 from flask_jwt_extended import jwt_required, get_jwt, current_user
 from views.helpers import role_required
 
-
+"""
+    ADMIN
+"""
 @platform_views.route('/stats', methods=['GET'])
 @jwt_required(optional=True)
 @role_required('admin')
@@ -18,6 +20,9 @@ def get_stats():
     ''' Gets all platform stats '''
     return jsonify({"message": "Coming Soon!!"}), 404
 
+"""
+    POST ADDITIONS
+"""
 @platform_views.route('/posts', methods=['POST'])
 @jwt_required()
 def create_post():
@@ -57,6 +62,9 @@ def create_post():
         'id': new_post.id,
     }), 201
 
+"""
+    FEED
+"""
 @platform_views.route('/feed', methods=['GET'])
 @jwt_required()
 def get_feed():
@@ -76,10 +84,16 @@ def get_feed():
             if k != 'user_id':
                 feed_data[k] = v
 
+        likes = [l.to_dict() for l in storage.all(Like).values() if l.post_id == post.id]
+        print(likes)
+        feed_data['likes'] = likes
         feed.append(feed_data)
     
     return jsonify(feed), 200
 
+"""
+    POST REACTIONS
+"""
 @platform_views.route('/posts/comment/<post_id>', methods=['POST'])
 @jwt_required()
 def create_comment(post_id):
@@ -157,6 +171,10 @@ def like_post(post_id):
 
     return jsonify({"message": "Post liked successfully!"}), 201
 
+
+"""
+    USER INTERACTIONS
+"""
 @platform_views.route('/users/follow/<user_id>', methods=['POST'])
 @jwt_required()
 def follow_user(user_id):

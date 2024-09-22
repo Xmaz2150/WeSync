@@ -30,7 +30,7 @@ def register():
     else:
         role = 'user'
 
-    new_user = User(username=username, email=email, role=role)
+    new_user = User(username=username, email=email, role=role, image_url='/wesync/img/default_profile.png')
     new_user.set_password(password)
 
     new_user.save()

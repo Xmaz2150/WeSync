@@ -199,3 +199,129 @@ def follow_user(user_id):
     new_follow.save()
 
     return jsonify({"message": "User followed successfully!"}), 201
+
+@platform_views.route('/users/unfollow/<user_id>', methods=['POST'])
+@jwt_required()
+def unfollow_user(user_id):
+    ''' Unfollows a user '''
+
+    if not user_id:
+        return jsonify({"message": "Invalid data!"}), 400
+    
+    user = storage.get(User, id=user_id)
+    if not user:
+        return jsonify({"message": "User not found!"}), 404
+    
+    follows = storage.all(Follow)
+
+    for id, follow in follows.items():
+        if follow.follower_id == current_user.id and follow.followed_id == user_id:
+            follow.delete()
+            return jsonify({"message": "User unfollowed successfully!"}), 200
+    
+    return jsonify({"message": "User not followed!"}), 400
+
+@platform_views.route('/users/followers/<user_id>', methods=['GET'])
+@jwt_required()
+def get_followers(user_id):
+    ''' Gets all followers of a user '''
+
+    if not user_id:
+        return jsonify({"message": "Invalid data!"}), 400
+    
+    user = storage.get(User, id=user_id)
+    if not user:
+        return jsonify({"message": "User not found!"}), 404
+    
+    followers_ids = [f.to_dict().get('follower_id') for f in storage.all(Follow).values() if f.followed_id == user_id]
+
+    followers = []
+    for id in followers_ids:
+        user = storage.get(User, id=id).to_dict()
+        del user['password_hash']
+        del user['role']
+        followers.append(user)
+
+    if len(followers) == 0:
+        return jsonify({"message": "No followers found!"}), 404
+
+    return jsonify(followers), 200
+
+@platform_views.route('/users/following/<user_id>', methods=['GET'])
+@jwt_required()
+def get_following(user_id):
+    ''' Gets all users user is following '''
+
+    if not user_id:
+        return jsonify({"message": "Invalid data!"}), 400
+    
+    user = storage.get(User, id=user_id)
+    if not user:
+        return jsonify({"message": "User not found!"}), 404
+    
+    following_ids = [f.to_dict().get('followed_id') for f in storage.all(Follow).values() if f.follower_id == user_id]
+
+    following = []
+    for id in following_ids:
+        user = storage.get(User, id=id).to_dict()
+        del user['password_hash']
+        del user['role']
+        following.append(user)
+
+    if len(following) == 0:
+        return jsonify({"message": "No followings found!"}), 404
+
+    return jsonify(following), 200
+
+@platform_views.route('/users/search/<username>', methods=['GET'])
+@jwt_required()
+def search_users(username):
+    ''' Searches for users by username '''
+
+    if not username:
+        return jsonify({"message": "Invalid data!"}), 400
+    
+    if username == 'all':
+        users_dicts = [u.to_dict() for u in storage.all(User).values()]
+
+        users = []
+        for user in users_dicts:
+            del user['password_hash']
+            del user['role']
+            users.append(user)
+        if len(users) == 0:
+            return jsonify({"message": "No users found!"}), 404
+        return jsonify(users), 200
+    
+    users_dicts = [u.to_dict() for u in storage.all(User).values() if username in u.username]
+
+    users = []
+    for user in users_dicts:
+        del user['password_hash']
+        del user['role']
+        users.append(user)
+
+    if len(users) == 0:
+        return jsonify({"message": "No users found!"}), 404
+    return jsonify(users), 200
+
+@platform_views.route("/users/search", methods=["GET"], strict_slashes=False)
+@jwt_required()
+def query_users():
+    ''' Searches for users by username '''
+    username = request.args.get('query', '')
+
+    if not username:
+        return jsonify({"message": "Invalid data!"}), 400
+    
+    users_dicts = [u.to_dict() for u in storage.all(User).values() if username.lower() in u.username.lower()]
+
+    users = []
+    for user in users_dicts:
+        del user['password_hash']
+        del user['role']
+        users.append(user)
+
+    if len(users) == 0:
+        return jsonify({"message": "No users found!"}), 404
+    return jsonify(users), 200

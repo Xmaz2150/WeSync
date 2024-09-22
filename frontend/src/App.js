@@ -10,8 +10,12 @@ import SignUp from "./pages/SignUp";
 import NewPost from "./pages/NewPost";
 import NewComment from "./pages/NewComment";
 import CommentsPage from "./pages/Comments";
+import Followers from "./pages/Followers";
+import Following from "./pages/Following";
 import Users from "./pages/Users";
 import SearchUsers from "./pages/SearchUsers";
+
+import NotFound from "./components/errors/NotFound";
 
 import Sidebar
 from "./components/SideBar";
@@ -39,8 +43,13 @@ function App() {
         <Route path="/newcomment/:postId" element={<PrivateRoute><NewComment /></PrivateRoute>} />
         <Route path="/comments/:postId" element={<PrivateRoute><CommentsPage /></PrivateRoute>} />
 
+        <Route path="/followers/:userId" element={<PrivateRoute><Followers /></PrivateRoute>} />
+        <Route path="/following/:userId" element={<PrivateRoute><Following /></PrivateRoute>} />
+
         <Route path="/users/" element={<PrivateRoute><Users /></PrivateRoute>} />
         <Route path="/searchUsers/" element={<PrivateRoute><SearchUsers /></PrivateRoute>} />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

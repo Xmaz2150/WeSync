@@ -1,0 +1,19 @@
+.notfound-container {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .notfound-container h1 {
+    font-size: 100px;
+    margin-bottom: 20px;
+  }
+  
+  .notfound-container p {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .notfound-container .btn {
+    font-size: 18px;
+    padding: 10px 20px;
+  }

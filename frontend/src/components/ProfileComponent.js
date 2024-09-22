@@ -1,6 +1,32 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileComponent = ({ user, recentPosts, imageUrl }) => {
+  const navigate = useNavigate();
+
+  const [shouldNavigateToFollowers, setShouldNavigateToFollowers] = useState(false);
+  const [shouldNavigateToFollowing, setShouldNavigateToFollowing] = useState(false);
+
+  const handleFollowersClick = () => {
+    setShouldNavigateToFollowers(true);
+  };
+
+  const handleFollowingClick = () => {
+    setShouldNavigateToFollowing(true);
+  };
+
+  useEffect(() => {
+    if (shouldNavigateToFollowers) {
+      navigate(`/followers/${user.id}`);
+    }
+  }, [shouldNavigateToFollowers, navigate, user.id]);
+
+  useEffect(() => {
+    if (shouldNavigateToFollowing) {
+      navigate(`/following/${user.id}`);
+    }
+  }, [shouldNavigateToFollowing, navigate, user.id]);
+
   return (
     <section className="h-100 gradient-custom-2 profile-section">
       <div className="container py-5 h-100">
@@ -31,11 +57,19 @@ const ProfileComponent = ({ user, recentPosts, imageUrl }) => {
                     <p className="small text-muted mb-0">Posts</p>
                   </div>
                   <div className="px-3">
-                    <p className="mb-1 h5">{user.followers.length}</p>
+                    <p className="mb-1 h5">
+                      <a href="#" onClick={handleFollowersClick} className="link-body-emphasis link-underline-opacity-0">
+                        {user.followers.length}
+                      </a>
+                    </p>
                     <p className="small text-muted mb-0">Followers</p>
                   </div>
                   <div>
-                    <p className="mb-1 h5">{user.following.length}</p>
+                    <p className="mb-1 h5">
+                      <a href="#" onClick={handleFollowingClick} className="link-body-emphasis link-underline-opacity-0">
+                        {user.following.length}
+                      </a>
+                    </p>
                     <p className="small text-muted mb-0">Following</p>
                   </div>
                 </div>

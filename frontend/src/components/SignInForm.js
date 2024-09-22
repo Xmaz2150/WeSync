@@ -8,7 +8,7 @@ import '../assets/css/custom-styles.css';
 
 const SignInForm = ({ email, setEmail, password, setPassword, handleSubmit, error }) => {
     return (
-      <main className="form-signin w-100 m-auto">
+      <main className="form-signin position-absolute top-50 start-50 translate-middle">
         <form onSubmit={handleSubmit}>
           <img className="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
           <h1 className="h3 mb-3 fw-normal">Please sign in</h1>

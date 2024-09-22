@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, Routes, Route } from "react-router-dom";
+
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import UserProfile from "./pages/UserProfile";
@@ -9,6 +10,9 @@ import SignUp from "./pages/SignUp";
 import NewPost from "./pages/NewPost";
 import NewComment from "./pages/NewComment";
 import CommentsPage from "./pages/Comments";
+import Users from "./pages/Users";
+import SearchUsers from "./pages/SearchUsers";
+
 import Sidebar
 from "./components/SideBar";
 import PrivateRoute from "./components/PrivateRoute";
@@ -26,13 +30,17 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn setToken={setToken} setImageUrl={setImageUrl}/>} />
         <Route path="/signup" element={<SignUp setToken={setToken}/>} />
+
         <Route path="/profile" element={<PrivateRoute><Profile imageUrl={imageUrl}/></PrivateRoute>} />
-        
         <Route path="/user/:userId" element={<PrivateRoute><UserProfile /></PrivateRoute>} />
+
         <Route path="/feed" element={<PrivateRoute><Feed /></PrivateRoute>} />
         <Route path="/newpost" element={<PrivateRoute><NewPost /></PrivateRoute>} />
         <Route path="/newcomment/:postId" element={<PrivateRoute><NewComment /></PrivateRoute>} />
         <Route path="/comments/:postId" element={<PrivateRoute><CommentsPage /></PrivateRoute>} />
+
+        <Route path="/users/" element={<PrivateRoute><Users /></PrivateRoute>} />
+        <Route path="/searchUsers/" element={<PrivateRoute><SearchUsers /></PrivateRoute>} />
       </Routes>
     </div>
   );

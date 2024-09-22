@@ -43,8 +43,7 @@ const Profile = (imageUrl) => {
   if (!user) {
     return <div>Loading...</div>;
   }
-  console.log(user);
-  return <ProfileComponent user={user} imageUrl={imageUrl} recentPosts={user1.recentPosts} />;
+  return <ProfileComponent user={user} imageUrl={imageUrl.imageUrl} recentPosts={user1.recentPosts} />;
 };
 
 export default Profile;

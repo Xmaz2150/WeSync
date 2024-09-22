@@ -14,4 +14,7 @@
     overflow-y: auto; /* Enable vertical scrolling */
     padding: 1rem;
   }
-  
+
+.comments-section {
+  height: 75vh;
+}

@@ -3,7 +3,9 @@ import { getProfile } from '../utils/api';
 
 import '../assets/css/profile.css';
 
-const Profile = () => {
+const IMAGE_SERVER = 'http://localhost:5000';
+
+const Profile = (imageUrl) => {
 
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
@@ -51,7 +53,7 @@ const Profile = () => {
               <div className="rounded-top text-white d-flex flex-row" style={{ backgroundColor: '#000', height: '200px' }}>
                 <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
                   <img
-                    src={user.image_url}
+                    src={imageUrl.imageUrl}
                     alt="Generic placeholder image"
                     className="img-fluid img-thumbnail mt-4 mb-2"
                     style={{ width: '150px', zIndex: 1 }}

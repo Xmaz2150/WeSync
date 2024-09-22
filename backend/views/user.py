@@ -54,7 +54,10 @@ def login():
             identity=user,
             additional_claims=additional_claims
         )
-        return jsonify(access_token=access_token), 200
+        return jsonify(
+            access_token=access_token,
+            image_url=user.image_url
+            ), 200
 
     return jsonify({"message": "Invalid credentials!"}), 401
 

@@ -16,15 +16,16 @@ import '../src/assets/css/custom-styles.css';
 
 function App() {
   const [token, setToken] = React.useState(localStorage.getItem('token'));
+  const [imageUrl, setImageUrl] = React.useState(localStorage.getItem('imageUrl'));
 
   return (
     <div className="app-container d-flex general-style">
-      { token && <Sidebar token={token} setToken={setToken} /> }
+      { token && <Sidebar token={token} setToken={setToken} imageUrl={imageUrl} setImageUrl={setImageUrl}/> }
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signin" element={<SignIn setToken={setToken}/>} />
+        <Route path="/signin" element={<SignIn setToken={setToken} setImageUrl={setImageUrl}/>} />
         <Route path="/signup" element={<SignUp setToken={setToken}/>} />
-        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+        <Route path="/profile" element={<PrivateRoute><Profile imageUrl={imageUrl}/></PrivateRoute>} />
         <Route path="/feed" element={<PrivateRoute><Feed /></PrivateRoute>} />
         <Route path="/newpost" element={<PrivateRoute><NewPost /></PrivateRoute>} />
         <Route path="/newcomment/:postId" element={<PrivateRoute><NewComment /></PrivateRoute>} />

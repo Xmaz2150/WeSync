@@ -4,10 +4,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //import '../assets/css/sidebar.css';
 //import '../assets/css/custom-styles.css';
 
-const Sidebar = ({ token, setToken }) => {
+const Sidebar = ({ token, setToken, imageUrl, setImageUrl }) => {
   const handleSignOut = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('ImageUrl');
     setToken(null);
+    setImageUrl(null);
     window.location.href = '/signin';
   };
 
@@ -62,7 +64,7 @@ const Sidebar = ({ token, setToken }) => {
           </div>
           <div className="dropdown">
           <a href="#" className="d-flex align-items-center justify-content-center p-3 link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="https://avatars.githubusercontent.com/u/113725438?v=4" alt="mdo" width="24" height="24" className="rounded-circle" />
+              <img src={imageUrl} alt="mdo" width="24" height="24" className="rounded-circle" />
             </a>
             <ul className="dropdown-menu dropdown-menu-light text-small shadow">
               <li>

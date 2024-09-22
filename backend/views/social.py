@@ -85,7 +85,6 @@ def get_feed():
                 feed_data[k] = v
 
         likes = [l.to_dict() for l in storage.all(Like).values() if l.post_id == post.id]
-        print(likes)
         feed_data['likes'] = likes
         feed.append(feed_data)
     

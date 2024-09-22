@@ -18,6 +18,7 @@ const Feed = () => {
           }
         });
         setPosts(response.data);
+        console.log(response.data);
       } catch (error) {
         console.log('Error fetching feed:', error);
       }
@@ -34,6 +35,10 @@ const Feed = () => {
 
   const handleCommentClick = (postId) => {
     navigate(`/newcomment/${postId}`);
+  };
+
+  const handleUserHandleClick = (postId) => {
+    navigate(`/user/${postId}`);
   };
 
   const handleLikeClick = async (postId) => {
@@ -65,7 +70,7 @@ const Feed = () => {
               </svg>
               <div>
                 <strong className="d-block text-gray-dark">{post.user_data.username}</strong>
-                <span className="text-muted">@handle · 2h</span>
+                <span className="text-muted"><a onClick={() => handleUserHandleClick(post.user_data.id)}>@handle</a> · 2h</span>
               </div>
             </div>
             <p className="mt-2 d-flex flex-column">

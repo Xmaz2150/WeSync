@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PostCard from '../components/PostCard';
+import '../assets/css/feed.css';
 
 
 import axios from 'axios';
@@ -35,7 +36,7 @@ const CommentsPage = () => {
 
   return (
     <div>
-      <PostCard post={post} />
+      <PostCard post={post} className="feed-content"/>
       <div className="comments-section">
         {comments.map((comment) => (
           <div key={comment.id} className="comment">

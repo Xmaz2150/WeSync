@@ -2,6 +2,7 @@ import React from "react";
 import { Link, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import UserProfile from "./pages/UserProfile";
 import Feed from "./pages/Feed";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
@@ -26,6 +27,8 @@ function App() {
         <Route path="/signin" element={<SignIn setToken={setToken} setImageUrl={setImageUrl}/>} />
         <Route path="/signup" element={<SignUp setToken={setToken}/>} />
         <Route path="/profile" element={<PrivateRoute><Profile imageUrl={imageUrl}/></PrivateRoute>} />
+        
+        <Route path="/user/:userId" element={<PrivateRoute><UserProfile /></PrivateRoute>} />
         <Route path="/feed" element={<PrivateRoute><Feed /></PrivateRoute>} />
         <Route path="/newpost" element={<PrivateRoute><NewPost /></PrivateRoute>} />
         <Route path="/newcomment/:postId" element={<PrivateRoute><NewComment /></PrivateRoute>} />

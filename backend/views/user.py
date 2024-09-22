@@ -73,7 +73,7 @@ def login():
 @jwt_required()
 def get_profile():
 
-    likes = [l.to_dict() for l in storage.all(Like, user_id=current_user.id).values()]
+    likes = [l.to_dict() for l in storage.all(Like, user_id=current_user.id).values() if l.user_id == current_user.id]
     posts = [p.to_dict() for p in storage.all(Post, user_id=current_user.id).values() if p.user_id == current_user.id]
     followers = [f.to_dict().get('follower_id') for f in storage.all(Follow, follower_id=current_user.id).values() if f.followed_id == current_user.id]
     following = [f.to_dict().get('followed_id') for f in storage.all(Follow, followed_id=current_user.id).values() if f.follower_id == current_user.id]
@@ -101,15 +101,17 @@ def get_user_profile(user_id):
     if not user:
         return jsonify({"message": "User not found!"}), 404
 
-    likes = [l.to_dict() for l in storage.all(Like, user_id=user.id).values()]
-    posts = [p.to_dict() for p in storage.all(Post, user_id=user.id).values()]
+    likes = [l.to_dict() for l in storage.all(Like, user_id=user.id).values() if l.user_id == user.id]
+    posts = [p.to_dict() for p in storage.all(Post, user_id=user.id).values() if p.user_id == user.id]
     followers = [f.to_dict().get('follower_id') for f in storage.all(Follow, follower_id=user.id).values() if f.followed_id == user.id]
     following = [f.to_dict().get('followed_id') for f in storage.all(Follow, followed_id=user.id).values() if f.follower_id == user.id]
+
 
     return jsonify(
         id=user.id,
         username=user.username,
         role=user.role,
+        image_url=user.image_url,
         likes=likes,
         posts=posts,
         followers=followers,

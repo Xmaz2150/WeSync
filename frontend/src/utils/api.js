@@ -27,3 +27,12 @@ export const getProfile = (token) => {
     }
   });
 };
+
+export const getUserProfile = (token, userId) => {
+  return axios.get(`${API_BASE_URL}/user/${userId}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    }
+  });
+};

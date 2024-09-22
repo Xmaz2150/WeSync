@@ -51,12 +51,14 @@ const NewPost = () => {
   };
 
   return (
-    <div>
-      <h1>Upload new File</h1>
+    <div className="inside-elements p-3 bg-body rounded shadow-sm">
+      <h1>New Post</h1>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <input type="file" name="file" onChange={handleFileChange} />
-        <input type="text" name="content" value={content} onChange={handleContentChange} placeholder="Your post content" />
-        <input type="submit" value="Upload" />
+        <textarea className="form-control" rows="3" name="content" value={content} onChange={handleContentChange} placeholder="Thoughts ..." />
+        <div className="mb-3">
+          <input className="form-control" type="file" name="file" onChange={handleFileChange}/>
+        </div>
+        <input className="btn btn-primary" type="submit" value="Post" />
       </form>
     </div>
   );

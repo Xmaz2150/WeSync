@@ -44,7 +44,6 @@ const Feed = () => {
         {posts.map(post => (
           <div key={post.id} className="inside-elements p-3 bg-body rounded shadow-sm">
             <div className="d-flex">
-              <img src={post.user_data.image_url} alt={post.user_data.username} />
               <svg className="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false">
                 <title>Placeholder</title>
                 <rect width="100%" height="100%" fill="#007bff"/>

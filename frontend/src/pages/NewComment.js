@@ -32,14 +32,16 @@ const NewComment = () => {
   };
 
   return (
-    <div>
+    <div className="inside-elements p-3 bg-body rounded shadow-sm">
       <h1>Add a Comment</h1>
+      
       <form onSubmit={handleSubmit}>
-        <input type="text" name="content" value={content} onChange={handleContentChange} placeholder="Your comment" />
-        <input type="submit" value="Submit" />
+        <textarea className="form-control" rows="3" name="content" value={content} onChange={handleContentChange} placeholder="Your comment" />
+        <input className="btn btn-primary" type="submit" value="Comment" />
       </form>
     </div>
   );
 };
+
 
 export default NewComment;

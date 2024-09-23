@@ -84,7 +84,8 @@ def get_profile():
     return jsonify(
         id=current_user.id,
         username=current_user.username,
-        role=current_user.role,
+        city=current_user.city,
+        bio=current_user.bio,
         likes=likes,
         posts=posts,
         followers=followers,
@@ -108,11 +109,11 @@ def get_user_profile(user_id):
     followers = [f.to_dict().get('follower_id') for f in storage.all(Follow, follower_id=user.id).values() if f.followed_id == user.id]
     following = [f.to_dict().get('followed_id') for f in storage.all(Follow, followed_id=user.id).values() if f.follower_id == user.id]
 
-
     return jsonify(
         id=user.id,
         username=user.username,
-        role=user.role,
+        city=user.city,
+        bio=user.bio,
         image_url=user.image_url,
         likes=likes,
         posts=posts,
@@ -120,24 +121,54 @@ def get_user_profile(user_id):
         following=following
     )
 
-@user_views.route('/profile/updatepic', methods=['POST'])
+@user_views.route('/profile/update', methods=['POST'])
 @jwt_required()
 def update_profile_pic():
     '''  '''
 
-    file = request.files['file']
+    if 'file' in request.files:
+        file = request.files['file']
 
-    if not file:
-        return jsonify({"message": "Invalid data!"}), 400
+        username = request.form.get('username')
+        bio = request.form.get('bio')
+        city = request.form.get('city')
+    else:
+        data = request.get_json()
 
-    image_name = upload_file(file)
+        username = data.get('username')
+        bio = data.get('bio')
+        city = data.get('city')
+        file = None
 
-    print('Before: ', current_user.image_url)
-    url_prefix = Config.IMG_URL_PREFIX
-    current_user.image_url = '{}{}.{}'.format(url_prefix, current_user.id, image_name)
-    rename_file(image_name, '{}.{}'.format(current_user.id, image_name))
+    if storage.get(User, username=username):
+        return jsonify({"message": "Username already taken"}), 400
+    
+    new_data = {}
+
+    if username:
+        current_user.username = username
+        new_data['username'] = username
+    
+    if bio:
+        current_user.bio = bio
+        new_data['bio'] = bio
+    
+    if city:
+        current_user.city = city
+        new_data['city'] = city
+
+    if file:
+        image_name = upload_file(file)
+        if not image_name:
+            return jsonify({"message": 'Supportted formats: {}'.format(' '.join(Config.ALLOWED_EXTENSIONS))}), 400
+
+        url_prefix = Config.IMG_URL_PREFIX
+        current_user.image_url = '{}{}.{}'.format(url_prefix, current_user.id, image_name)
+        new_data['image_url'] = current_user.image_url
+        rename_file(image_name, '{}.{}'.format(current_user.id, image_name))
+
+    if len(new_data) == 0:
+        return jsonify({"message": "No data provided!"}), 400
+
     current_user.save()
-
-    print('After: ', current_user.image_url)
-
-    return jsonify({"message": "Picture updated!"}), 201
+    return jsonify({"new_data": new_data}), 201

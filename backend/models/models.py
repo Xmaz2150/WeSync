@@ -20,6 +20,8 @@ class User(BaseModel, Base):
     phone = Column(String(SHORT_SHORT_TEXT), nullable=True)
     role = Column(String(SHORT_SHORT_TEXT), nullable=False)
     image_url = Column(String(LONG_TEXT), nullable=True)
+    bio = Column(String(SHORT_TEXT), nullable=True)
+    city = Column(String(SHORT_TEXT), nullable=True)
 
     posts = relationship('Post', backref='author', lazy=True)
     comments = relationship('Comment', backref='author', lazy=True)

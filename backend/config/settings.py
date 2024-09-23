@@ -24,4 +24,4 @@ class Config:
     ''' Image Options '''
     UPLOAD_FOLDER = getenv('UPLOAD_PATH', 'static/uploads/images')
     IMG_URL_PREFIX = getenv('IMG_URL_PREFIX', '/wesync/img/')
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}

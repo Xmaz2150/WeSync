@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import UserSection from '../components/UserSection';
-
-import axios from 'axios';
+import { followUser, unfollowUser, queryUsers } from '../utils/api';
 
 const SearchUsers = () => {
   const [query, setQuery] = useState('');
@@ -11,11 +10,7 @@ const SearchUsers = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get(`http://localhost:5000/social/users/search?query=${query}`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      const response = await queryUsers(query);
       setResults(response.data);
     } catch (error) {
       setError('Please input a valid username');
@@ -24,13 +19,8 @@ const SearchUsers = () => {
   };
 
   const handleFollow = async (userId) => {
-    try {
-      await axios.post(`http://localhost:5000/social/users/follow/${userId}`, {}, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-      // Optionally update the results to reflect the follow status
+    try { 
+      await followUser(userId);
     } catch (error) {
       console.log('Error following user:', error);
     }
@@ -38,12 +28,7 @@ const SearchUsers = () => {
 
   const handleUnfollow = async (userId) => {
     try {
-      await axios.delete(`http://localhost:5000/social/users/unfollow/${userId}`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-      // Optionally update the results to reflect the unfollow status
+      await unfollowUser(userId);
     } catch (error) {
       console.log('Error unfollowing user:', error);
     }

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import UserSection from '../components/UserSection';
-
 import NotFound from '../components/errors/NotFound';
 
-import axios from 'axios';
+import { removeFollower, allFollowers } from '../utils/api';
 
 const Followers = () => {
   const { userId } = useParams();
@@ -14,11 +13,7 @@ const Followers = () => {
   useEffect(() => {
     const fetchFollowers = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/social/users/followers/${userId}`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        });
+        const response = await allFollowers(userId);
         setFollowers(response.data);
       } catch (error) {
         setError(error.response);
@@ -30,11 +25,7 @@ const Followers = () => {
 
   const handleRemoveFollower = async (followerId) => {
     try {
-      await axios.delete(`http://localhost:5000/social/users/removefollow/${followerId}`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      await removeFollower(followerId);
       setFollowers(followers.filter(follower => follower.id !== followerId));
     } catch (error) {
       console.log('Error removing follower:', error);

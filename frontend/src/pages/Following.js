@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import NotFound from '../components/errors/NotFound';
 import UserSection from '../components/UserSection';
 
-import axios from 'axios';
+import { followingUsers, unfollowUser } from '../utils/api';
 
 const Following = () => {
   const { userId } = useParams();
@@ -13,11 +13,7 @@ const Following = () => {
   useEffect(() => {
     const fetchFollowing = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/social/users/following/${userId}`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        });
+        const response = await followingUsers(userId);
         setFollowing(response.data);
       } catch (error) {
         setError(error.response);
@@ -29,11 +25,7 @@ const Following = () => {
 
   const handleUnfollow = async (followingId) => {
     try {
-      await axios.delete(`http://localhost:5000/social/users/unfollow/${followingId}`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      await unfollowUser(followingId);
       setFollowing(following.filter(user => user.id !== followingId));
     } catch (error) {
       console.log('Error unfollowing user:', error);

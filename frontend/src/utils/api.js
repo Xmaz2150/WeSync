@@ -1,8 +1,15 @@
 import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:5000/wesync';
-const API_P_BASE_URL = 'http://localhost:5000/social';
+const API_P_BASE_URL = 'http://localhost:5000/social/users';
 
+const getJwt = () => {
+  return localStorage.getItem('token');;
+}
+
+/**
+ * FORMS
+ */
 export const login = (userData) => {
   return axios.post(`${API_BASE_URL}/login`, userData, {
     headers: {
@@ -19,6 +26,9 @@ export const register = (userData) => {
   });
 };
 
+/**
+ * PROFILES
+ */
 export const getProfile = (token) => {
   return axios.get(`${API_BASE_URL}/profile`, {
     headers: {
@@ -36,3 +46,60 @@ export const getUserProfile = (token, userId) => {
     }
   });
 };
+
+/**
+ * FOLLOWS
+ */
+
+export const followUser = (userId) => {
+  return axios.post(`${API_P_BASE_URL}/follow/${userId}`, {}, {
+    headers: {
+      'Authorization': `Bearer ${getJwt()}`
+    }
+  });
+};
+
+export const unfollowUser = (userId) => {
+  return axios.delete(`${API_P_BASE_URL}/unfollow/${userId}`, {
+    headers: {
+      'Authorization': `Bearer ${getJwt()}`
+    }
+  });
+};
+
+export const removeFollower = (followerId) => {
+  return axios.delete(`${API_P_BASE_URL}/removefollow/${followerId}`, {
+    headers: {
+      'Authorization': `Bearer ${getJwt()}`
+    }
+  });
+};
+
+export const allFollowers = (userId) => {
+  return axios.get(`${API_P_BASE_URL}/followers/${userId}`, {
+    headers: {
+      'Authorization': `Bearer ${getJwt()}`
+    }
+  });
+};
+
+//
+export const followingUsers = (userId) => {
+  return axios.get(`${API_P_BASE_URL}/following/${userId}`, {
+    headers: {
+      'Authorization': `Bearer ${getJwt()}`
+    }
+  });
+};
+
+/**
+ * USERS
+ */
+
+export const queryUsers = (query) => {
+  return axios.get(`${API_P_BASE_URL}/search?query=${query}`, {
+    headers: {
+      'Authorization': `Bearer ${getJwt()}`
+    }
+  });
+}

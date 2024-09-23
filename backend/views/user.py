@@ -4,7 +4,9 @@ from models.models import User, Like, Post, Comment, Follow
 
 from config.settings import Config
 from flask_jwt_extended import create_access_token, jwt_required, current_user
-from views import user_views 
+from views import user_views
+
+from utils.file import upload_file, rename_file
 
 
 """
@@ -117,3 +119,25 @@ def get_user_profile(user_id):
         followers=followers,
         following=following
     )
+
+@user_views.route('/profile/updatepic', methods=['POST'])
+@jwt_required()
+def update_profile_pic():
+    '''  '''
+
+    file = request.files['file']
+
+    if not file:
+        return jsonify({"message": "Invalid data!"}), 400
+
+    image_name = upload_file(file)
+
+    print('Before: ', current_user.image_url)
+    url_prefix = Config.IMG_URL_PREFIX
+    current_user.image_url = '{}{}.{}'.format(url_prefix, current_user.id, image_name)
+    rename_file(image_name, '{}.{}'.format(current_user.id, image_name))
+    current_user.save()
+
+    print('After: ', current_user.image_url)
+
+    return jsonify({"message": "Picture updated!"}), 201

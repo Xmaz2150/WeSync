@@ -126,7 +126,11 @@ def get_comments(post_id):
     if not post_id:
         return jsonify({"message": "Post not found!"}), 404
 
-    post = storage.get(Post, id=post_id).to_dict()
+    post_inst = storage.get(Post, id=post_id)
+    if not post_inst:
+        return jsonify({"message": "Post not found!"}), 404
+
+    post = post_inst.to_dict()
     user = storage.get(User, id=post['user_id']).to_dict()
     post_data = {
         'user_data': {

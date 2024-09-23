@@ -39,8 +39,8 @@ const Followers = () => {
   return (
     <div className="inside-elements p-3 bg-body rounded shadow-sm">
       <h1>Followers</h1>
-      {followers.map(follower => (
-        <div>
+      {followers.map((follower, index) => (
+        <div key={index}>
           <UserSection user={follower} />
           <button onClick={() => handleRemoveFollower(follower.id)} className="btn btn-danger">Remove Follower</button>
         </div>

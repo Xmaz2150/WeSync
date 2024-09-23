@@ -40,8 +40,8 @@ const Following = () => {
   return (
     <div className="inside-elements p-3 bg-body rounded shadow-sm">
       <h1>Following</h1>
-      {following.map(following => (
-        <div>
+      {following.map((following, index) => (
+        <div key={index}>
           <UserSection user={following} />
           <button onClick={() => handleUnfollow(following.id)} className="btn btn-danger">Unfollow</button>
         </div>

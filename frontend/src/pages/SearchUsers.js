@@ -47,8 +47,8 @@ const SearchUsers = () => {
         <button type="submit" className="btn btn-primary mt-2">Search</button>
       </form>
       {error && <div>{error}</div>}
-      {results.map(user => (
-        <div>
+      {results.map((user, index) => (
+        <div key={index}>
           <UserSection user={user} />
           <button onClick={() => handleFollow(user.id)} className="btn btn-success">Follow</button>
           <button onClick={() => handleUnfollow(user.id)} className="btn btn-danger">Unfollow</button>

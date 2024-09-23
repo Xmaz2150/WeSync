@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import UserSection from '../components/UserSection';
 
 import NotFound from '../components/errors/NotFound';
 
@@ -36,9 +37,7 @@ const Followers = () => {
     <div className="inside-elements p-3 bg-body rounded shadow-sm">
       <h1>Followers</h1>
       {followers.map(follower => (
-        <div key={follower.id} className="follower">
-          <p>{follower.username}</p>
-        </div>
+        <UserSection user={follower} />
       ))}
     </div>
   );

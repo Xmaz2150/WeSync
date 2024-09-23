@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import NotFound from '../components/errors/NotFound';
+import UserSection from '../components/UserSection';
 
 import axios from 'axios';
 
@@ -34,10 +35,8 @@ const Following = () => {
   return (
     <div className="inside-elements p-3 bg-body rounded shadow-sm">
       <h1>Following</h1>
-      {following.map(user => (
-        <div key={user.id} className="following">
-          <p>{user.username}</p>
-        </div>
+      {following.map(following => (
+        <UserSection user={following} />
       ))}
     </div>
   );

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import UserSection from '../components/UserSection';
+
 import axios from 'axios';
 
 const SearchUsers = () => {
@@ -36,9 +38,7 @@ const SearchUsers = () => {
       </form>
       {error && <div>{error}</div>}
       {results.map(user => (
-        <div key={user.id} className="user">
-          <p>{user.username}</p>
-        </div>
+        <UserSection user={user} />
       ))}
     </div>
   );

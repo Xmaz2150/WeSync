@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../assets/css/notfound.css';
+import '../../assets/css/notfound.css';
 
 const NotFound = ({ statusCode, message }) => {
   return (

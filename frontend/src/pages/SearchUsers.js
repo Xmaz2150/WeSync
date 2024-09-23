@@ -23,6 +23,31 @@ const SearchUsers = () => {
     }
   };
 
+  const handleFollow = async (userId) => {
+    try {
+      await axios.post(`http://localhost:5000/social/users/follow/${userId}`, {}, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      // Optionally update the results to reflect the follow status
+    } catch (error) {
+      console.log('Error following user:', error);
+    }
+  };
+
+  const handleUnfollow = async (userId) => {
+    try {
+      await axios.delete(`http://localhost:5000/social/users/unfollow/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      // Optionally update the results to reflect the unfollow status
+    } catch (error) {
+      console.log('Error unfollowing user:', error);
+    }
+  };
   return (
     <div className="inside-elements p-3 bg-body rounded shadow-sm">
       <h1>Search Users</h1>
@@ -38,7 +63,11 @@ const SearchUsers = () => {
       </form>
       {error && <div>{error}</div>}
       {results.map(user => (
-        <UserSection user={user} />
+        <div>
+          <UserSection user={user} />
+          <button onClick={() => handleFollow(user.id)} className="btn btn-success">Follow</button>
+          <button onClick={() => handleUnfollow(user.id)} className="btn btn-danger">Unfollow</button>
+        </div>
       ))}
     </div>
   );

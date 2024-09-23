@@ -28,16 +28,31 @@ const Followers = () => {
     fetchFollowers();
   }, [userId]);
 
+  const handleRemoveFollower = async (followerId) => {
+    try {
+      await axios.delete(`http://localhost:5000/social/users/removefollow/${followerId}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      setFollowers(followers.filter(follower => follower.id !== followerId));
+    } catch (error) {
+      console.log('Error removing follower:', error);
+    }
+  };
+ 
   if (error) {
     console.log('Error:', error);
     return <NotFound statusCode={error.status} message={error.data.message}/>;
   }
-
   return (
     <div className="inside-elements p-3 bg-body rounded shadow-sm">
       <h1>Followers</h1>
       {followers.map(follower => (
-        <UserSection user={follower} />
+        <div>
+          <UserSection user={follower} />
+          <button onClick={() => handleRemoveFollower(follower.id)} className="btn btn-danger">Remove Follower</button>
+        </div>
       ))}
     </div>
   );

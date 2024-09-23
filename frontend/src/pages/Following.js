@@ -27,6 +27,19 @@ const Following = () => {
     fetchFollowing();
   }, [userId]);
 
+  const handleUnfollow = async (followingId) => {
+    try {
+      await axios.delete(`http://localhost:5000/social/users/unfollow/${followingId}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      setFollowing(following.filter(user => user.id !== followingId));
+    } catch (error) {
+      console.log('Error unfollowing user:', error);
+    }
+  };
+
   if (error) {
     console.log('Error:', error);
     return <NotFound statusCode={error.status} message={error.data.message}/>;
@@ -36,7 +49,10 @@ const Following = () => {
     <div className="inside-elements p-3 bg-body rounded shadow-sm">
       <h1>Following</h1>
       {following.map(following => (
-        <UserSection user={following} />
+        <div>
+          <UserSection user={following} />
+          <button onClick={() => handleUnfollow(following.id)} className="btn btn-danger">Unfollow</button>
+        </div>
       ))}
     </div>
   );

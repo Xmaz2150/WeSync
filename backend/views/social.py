@@ -200,7 +200,7 @@ def follow_user(user_id):
 
     return jsonify({"message": "User followed successfully!"}), 201
 
-@platform_views.route('/users/unfollow/<user_id>', methods=['POST'])
+@platform_views.route('/users/unfollow/<user_id>', methods=['DELETE'])
 @jwt_required()
 def unfollow_user(user_id):
     ''' Unfollows a user '''
@@ -216,10 +216,33 @@ def unfollow_user(user_id):
 
     for id, follow in follows.items():
         if follow.follower_id == current_user.id and follow.followed_id == user_id:
-            follow.delete()
+            storage.delete(follow)
+            storage.save()
             return jsonify({"message": "User unfollowed successfully!"}), 200
     
     return jsonify({"message": "User not followed!"}), 400
+
+@platform_views.route('/users/removefollow/<user_id>', methods=['DELETE'])
+@jwt_required()
+def remove_follower(user_id):
+    ''' Unfollows a user '''
+
+    if not user_id:
+        return jsonify({"message": "Invalid data!"}), 400
+    
+    user = storage.get(User, id=user_id)
+    if not user:
+        return jsonify({"message": "User not found!"}), 404
+    
+    follows = storage.all(Follow)
+
+    for id, follow in follows.items():
+        if follow.followed_id == current_user.id and follow.follower_id == user_id:
+            storage.delete(follow)
+            storage.save()
+            return jsonify({"message": "User unfollowed successfully!"}), 200
+    
+    return jsonify({"message": "User not removed!"}), 400
 
 @platform_views.route('/users/followers/<user_id>', methods=['GET'])
 @jwt_required()

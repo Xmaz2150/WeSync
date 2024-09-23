@@ -28,7 +28,7 @@ const Profile = (imageUrl) => {
   if (!user) {
     return <div>Loading...</div>;
   }
-  return <ProfileComponent user={user} imageUrl={imageUrl.imageUrl} />;
+  return <ProfileComponent user={user} imageUrl={imageUrl.imageUrl} isUser={true} />;
 };
 
 export default Profile;

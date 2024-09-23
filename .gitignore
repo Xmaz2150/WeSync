@@ -2,3 +2,6 @@ env
 __pycache__
 node_modules
 static
+alembic
+alembic.ini
+*.dump

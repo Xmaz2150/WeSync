@@ -14,6 +14,7 @@ import Followers from "./pages/Followers";
 import Following from "./pages/Following";
 import Users from "./pages/Users";
 import SearchUsers from "./pages/SearchUsers";
+import UpdateProfile from "./pages/UpdateProfile";
 
 import NotFound from "./components/errors/NotFound";
 
@@ -48,6 +49,7 @@ function App() {
 
         <Route path="/users/" element={<PrivateRoute><Users /></PrivateRoute>} />
         <Route path="/searchUsers/" element={<PrivateRoute><SearchUsers /></PrivateRoute>} />
+        <Route path="/updateProfile/" element={<PrivateRoute><UpdateProfile /></PrivateRoute>} />
 
         <Route path="*" element={<PrivateRoute><NotFound statusCode={404} message={'Page not found!'}/></PrivateRoute>} />
       </Routes>

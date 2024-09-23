@@ -32,7 +32,7 @@ const UserProfile = () => {
     return <div>Loading...</div>;
   }
 
-  return <ProfileComponent user={user} imageUrl={`${IMAGE_SERVER}/${user.image_url}`} />;
+  return <ProfileComponent user={user} imageUrl={`${IMAGE_SERVER}/${user.image_url}`} isUser={false}/>;
 };
 
 export default UserProfile;

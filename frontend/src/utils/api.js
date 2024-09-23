@@ -47,6 +47,24 @@ export const getUserProfile = (token, userId) => {
   });
 };
 
+export const updateProfileWithPic = (formData) => {
+  return axios.post(`${API_BASE_URL}/profile/update`, formData, {
+  headers: {
+    'Authorization': `Bearer ${getJwt()}`,
+    'Content-Type': 'multipart/form-data'
+  }
+  });
+};
+
+export const updateProfile = (data) => {
+  return axios.post(`${API_BASE_URL}/profile/update`, data, {
+    headers: {
+      'Authorization': `Bearer ${getJwt()}`,
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
 /**
  * FOLLOWS
  */

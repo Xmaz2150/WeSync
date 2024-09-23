@@ -7,7 +7,7 @@ import '../assets/css/custom-styles.css';
 const IMAGE_SERVER_URL = 'http://localhost:5000';
 const DEFAULT_POST_IMAGE = `${IMAGE_SERVER_URL}/wesync/img/text_place_holder1.jpg`;
 
-const ProfileComponent = ({ user, imageUrl }) => {
+const ProfileComponent = ({ user, imageUrl, isUser}) => {
   const navigate = useNavigate();
 
   const [shouldNavigateToFollowers, setShouldNavigateToFollowers] = useState(false);
@@ -23,6 +23,9 @@ const ProfileComponent = ({ user, imageUrl }) => {
 
   const handlePostClick = (postId) => {
     navigate(`/comments/${postId}`);
+  };
+  const handleUpdateClick = () => {
+    navigate(`/updateProfile`);
   };
 
   useEffect(() => {
@@ -59,13 +62,20 @@ const ProfileComponent = ({ user, imageUrl }) => {
                   className="img-fluid img-thumbnail mt-4 mb-2"
                   style={{ width: '150px', zIndex: 1 }}
                 />
-                <button type="button" className="btn btn-outline-dark text-body" style={{ zIndex: 1 }}>
-                  Edit profile
-                </button>
+                {
+                  (isUser) &&
+                  <button type="button" className="btn btn-outline-dark text-body" style={{ zIndex: 1 }} onClick={() => handleUpdateClick()}>
+                    Edit profile
+                  </button>
+                }
               </div>
               <div className="ms-3" style={{ marginTop: '130px' }}>
                 <h5>{user.username}</h5>
-                <p>The Bay</p>
+                {
+                    (user.city)
+                    ? <p>{user.city}</p>
+                    : <p>The Bay</p>
+                }
               </div>
             </div>
             <div className="p-4 text-black bg-body-tertiary">
@@ -94,9 +104,14 @@ const ProfileComponent = ({ user, imageUrl }) => {
             </div>
             <div className="card-body p-4 text-black">
               <div className="mb-5 text-body">
-                <p className="lead fw-normal mb-1">About</p>
                 <div className="p-4 bg-body-tertiary">
-                  <p className="font-italic mb-1">{user.bio}Hello I'm using WeSync!</p>
+                  <p className="font-italic mb-1">
+                    {
+                      (user.bio)
+                      ? <p>{user.bio}</p>
+                      : <p>Hello I'm using WeSync!</p>
+                    }
+                  </p>
                 </div>
               </div>
               <div className="d-flex justify-content-between align-items-center mb-4 text-body">

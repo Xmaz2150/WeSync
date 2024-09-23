@@ -49,7 +49,7 @@ function App() {
         <Route path="/users/" element={<PrivateRoute><Users /></PrivateRoute>} />
         <Route path="/searchUsers/" element={<PrivateRoute><SearchUsers /></PrivateRoute>} />
 
-        <Route path="*" element={<NotFound statusCode={404} message={'Page not found!'}/>} />
+        <Route path="*" element={<PrivateRoute><NotFound statusCode={404} message={'Page not found!'}/></PrivateRoute>} />
       </Routes>
     </div>
   );

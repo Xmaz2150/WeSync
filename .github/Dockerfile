@@ -35,5 +35,8 @@ COPY frontend/ ./frontend/
 # Expose the port your Flask app runs on
 EXPOSE 5000 3000
 
+# Set the FLASK_APP environment variable
+ENV FLASK_APP=backend/app.py
+
 # Command to run both apps
-CMD ["sh", "-c", "IS_SU=su SECRET_KEY=the_secret JWT_SECRET_KEY=the_jwt_secret source env/bin/activate && flask run && npm run start"]
+CMD ["sh", "-c", "IS_SU=su SECRET_KEY=the_secret JWT_SECRET_KEY=the_jwt_secret flask run && npm run start"]

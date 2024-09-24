@@ -53,19 +53,7 @@ const CommentsPage = () => {
                   </div>
 
                   <p> {comment.content}</p>            
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div className="d-flex align-items-center">
-                      <a href="#!" className="link-muted me-2">
-                        <i className="fas fa-thumbs-up me-1"></i>132
-                      </a>
-                      <a href="#!" className="link-muted">
-                        <i className="fas fa-thumbs-down me-1"></i>15
-                      </a>
-                    </div>
-                    <a href="#!" className="link-muted">
-                      <i className="fas fa-reply me-1"></i> Reply
-                    </a>
-                  </div>
+                  
                   </div>
                 </div>
               </div>

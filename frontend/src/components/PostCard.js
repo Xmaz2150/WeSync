@@ -39,7 +39,6 @@ const PostCard = ({ post }) => {
         <Link to={`/comments/${post.id}`}>
           <button className="btn btn-light btn-sm"><i className="bi bi-chat"></i> Comments</button>
         </Link>
-        <button className="btn btn-light btn-sm"><i className="bi bi-share"></i> Share</button>
       </div>
     </div>
   );

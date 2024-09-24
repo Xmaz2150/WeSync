@@ -50,7 +50,7 @@ const SignUpForm = ({ username, setUsername, email, setEmail, password, setPassw
         <button className="btn btn-primary w-100 py-2" type="submit">Sign up</button>
         {error && <p className="text-danger mt-3">{error}</p>}
         <p className="mt-3">Already have an account? <Link to="/signin">Sign in</Link></p>
-        <p className="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>
+        <p className="mt-5 mb-3 text-body-secondary">&copy; 2024-</p>
       </form>
     </main>
   );

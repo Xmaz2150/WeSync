@@ -44,6 +44,7 @@ jobs:
       - name: Build the Docker image
         run: |
           docker build . --file .github/Dockerfile --tag zirahhh/wesync:1.0
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push zirahhh/wesync:1.0
           
 

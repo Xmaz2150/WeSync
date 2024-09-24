@@ -15,11 +15,11 @@ jobs:
         directory: [backend, frontend]
         include:
           - directory: backend
-            dockerfile: backend/Dockerfile
+            dockerfile: .github/workflows/backend/Dockerfile
             image_name: zirahhh/wesync-backend
             version: '1.0'
           - directory: frontend
-            dockerfile: frontend/Dockerfile
+            dockerfile: .github/workflows/frontend/Dockerfile
             image_name: zirahhh/wesync-frontend
             version: '1.0'
 

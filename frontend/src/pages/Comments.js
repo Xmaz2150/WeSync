@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PostCard from '../components/PostCard';
+import { postAndAllComments } from '../utils/api';
+
 import '../assets/css/feed.css';
 import '../assets/css/custom-styles.css';
-
-
-import axios from 'axios';
 
 const CommentsPage = () => {
   const { postId } = useParams();
@@ -16,11 +15,7 @@ const CommentsPage = () => {
     const fetchPostAndComments = async () => {
       try {
 
-        const response = await axios.get(`http://localhost:5000/social/posts/comments/${postId}`, {
-            headers: {
-              'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-          });
+        const response = await postAndAllComments(postId);
         setPost(response.data.post_data);
         setComments(response.data.comments);
       } catch (error) {
@@ -38,7 +33,7 @@ const CommentsPage = () => {
   return (
     <div className="feed-content feed-container w-100">
       <main className="">
-        <PostCard post={post} className="inside-elements p-3 bg-body rounded shadow-sm"/>
+        <PostCard post={post} />
         <div >
           {comments.map((comment, index) => (
             <div key={index} className="d-flex flex-start mb-4">

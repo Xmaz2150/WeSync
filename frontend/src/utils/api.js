@@ -121,3 +121,30 @@ export const queryUsers = (query) => {
     }
   });
 }
+
+
+export const likePost = (postId) => {
+  return axios.post(`http://localhost:5000/social/posts/like/${postId}`, {}, {
+    headers: {
+      'Authorization': `Bearer ${getJwt()}`,
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const allFeeds = () => {
+  return axios.get('http://localhost:5000/social/feed', {
+    headers: {
+      'Authorization': `Bearer ${getJwt()}`,
+    }
+  });
+};
+
+
+export const postAndAllComments = (postId) => {
+  return axios.get(`http://localhost:5000/social/posts/comments/${postId}`, {
+    headers: {
+      'Authorization': `Bearer ${getJwt()}`
+    }
+  });
+};

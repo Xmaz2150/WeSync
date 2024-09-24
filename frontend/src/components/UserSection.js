@@ -1,26 +1,47 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const IMAGE_SERVER_URL = 'http://localhost:5000';
 
-
-const UserSection = ({ user }) => {
+const UserSection = ({ user, time }) => {
   const navigate = useNavigate();
 
   const handleUserHandleClick = (postId) => {
     navigate(`/user/${postId}`);
   };
+
+  const timeHelper = (time) => {
+    let newTime = new Date(time);
+    let latestTime = new Date();
+
+    let elapsedTime = latestTime - newTime;
+    let seconds = Math.floor(elapsedTime / 1000) - 7200;
+    if (seconds < 60) return `${seconds}s`;
+  
+    let minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes}m`;
+
+    let hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h`;
+
+    let days = Math.floor(hours / 24);
+    if (days < 30) return `${days}d`;
+
+  };
+
   return (
     <div className="d-flex">
-        <svg className="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false">
-          <title>Placeholder</title>
-          <rect width="100%" height="100%" fill="#007bff"/>
-          <text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text>
-        </svg>
-        <div>
-          <strong className="d-block text-gray-dark">{user.username}</strong>
-          <span className="text-muted"><a onClick={() => handleUserHandleClick(user.id)}>@handle</a></span>
-        </div>
+      <img 
+        src={`${IMAGE_SERVER_URL}/${user.image_url}`} 
+        width="32" 
+        height="32" 
+        className="bd-placeholder-img flex-shrink-0 me-2 rounded" 
+      />
+      <div>
+        <strong className="d-block text-gray-dark">{user.username}</strong>
+        <span className="text-muted"><a onClick={() => handleUserHandleClick(user.id)}>@{user.username} {time && <>· {timeHelper(time)}</>}</a></span>
       </div>
+    </div>
   );
 };
 

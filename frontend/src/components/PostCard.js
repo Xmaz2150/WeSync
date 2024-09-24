@@ -1,5 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'
+
+import { likePost } from '../utils/api';
+import UserSection from './UserSection';
 import '../assets/css/custom-styles.css';
 
 const PostCard = ({ post }) => {
@@ -8,28 +11,36 @@ const PostCard = ({ post }) => {
   const handleCommentClick = (postId) => {
     navigate(`/newcomment/${postId}`);
   };
+
+  const handleLikeClick = async (postId) => {
+    try {
+      const response = await likePost(postId);
+      console.log(response.data);
+    } catch (error) {
+      console.log('Error fetching feed:', error);
+    }
+  };
+
+  if (!post) {
+    return <div>
+      <h1>Loading...</h1>
+      </div>;
+  }
   return (
     <div key={post.id} className="inside-elements p-3 bg-body rounded shadow-sm">
-        <div className="d-flex">
-        <svg className="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false">
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#007bff"/>
-            <text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text>
-        </svg>
-        <div>
-            <strong className="d-block text-gray-dark">{post.user_data.username}</strong>
-            <span className="text-muted">@handle · 2h</span>
-        </div>
-        </div>
-        <p className="mt-2 d-flex flex-column">
+      <UserSection user={post.user_data} time={post.created_at}/>
+      <p className="mt-2 d-flex flex-column">
         {post.content}
         {post.image_url && <img className="w-75" src={'http://localhost:5000/'+post.image_url} alt="Post" />}
-        </p>
-        <div>
-        <button className="btn btn-light btn-sm"><i className="bi bi-heart"></i> Like</button>
+      </p>
+      <div>
+        <button className="btn btn-light btn-sm" onClick={() => handleLikeClick(post.id)}><i className="bi bi-heart"></i> { (post.likes && post.likes.length == 0) ? <>Like</> : <>Likes {post.likes && post.likes.length}</> } </button>
         <button className="btn btn-light btn-sm" onClick={() => handleCommentClick(post.id)}><i className="bi bi-chat"></i> Comment</button>
+        <Link to={`/comments/${post.id}`}>
+          <button className="btn btn-light btn-sm"><i className="bi bi-chat"></i> Comments</button>
+        </Link>
         <button className="btn btn-light btn-sm"><i className="bi bi-share"></i> Share</button>
-        </div>
+      </div>
     </div>
   );
 };

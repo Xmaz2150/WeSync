@@ -3,7 +3,6 @@
 Welcome consumer!!
 
 ## Table of Contents
-
 - [API Endpoints](#api-endpoints)
 - [Image Server](#image-server)
 
@@ -12,9 +11,7 @@ Welcome consumer!!
 ## API Endpoints
 
 ### Coming Soon
-
 ## Image Server
-
 ### Get
 - **Endpoint:** `/wesync/img/<filename>`
 - **Method:** `GET`

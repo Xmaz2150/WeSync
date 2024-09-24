@@ -10,9 +10,8 @@ COPY backend/ ./backend/
 # Copy the entire frontend directory to the working directory
 COPY frontend/ ./frontend/
 
-# Create a virtual environment and install the Python dependencies
-RUN python -m venv /app/backend/env && \
-    /app/backend/env/bin/pip install --no-cache-dir -r backend/requirements.txt
+# Install the Python dependencies
+RUN pip install --no-cache-dir -r backend/requirements.txt
 
 # Install Node.js and npm
 RUN apt-get update && \

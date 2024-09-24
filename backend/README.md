@@ -6,8 +6,6 @@ Welcome consumer!!
 - [API Endpoints](#api-endpoints)
 - [Image Server](#image-server)
 
-
-
 ## API Endpoints
 
 ### Coming Soon

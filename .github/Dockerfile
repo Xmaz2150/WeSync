@@ -36,4 +36,4 @@ COPY frontend/ ./frontend/
 EXPOSE 5000 3000
 
 # Command to run both apps
-CMD ["sh", "-c", "IS_SU=su SECRET_KEY=the_secret JWT_SECRET_KEY=the_jwt_secret flask run && npm run start"]
+CMD ["sh", "-c", "IS_SU=su SECRET_KEY=the_secret JWT_SECRET_KEY=the_jwt_secret source env/bin/activate && flask run && npm run start"]

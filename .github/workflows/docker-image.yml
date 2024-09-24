@@ -30,4 +30,4 @@ jobs:
       - name: Build the Docker image
         run: |
           docker build . --file ${{ inputs.dockerfile }} --tag ${{ inputs.image_name }}:${{ inputs.version }}
-          docker push ${{ inputs.image_name }}
+          docker push ${{ inputs.image_name }}:${{ inputs.version }}

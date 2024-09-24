@@ -83,6 +83,7 @@ def get_feed():
         for k, v in post.to_dict().items():
             if k != 'user_id':
                 feed_data[k] = v
+        feed_data['created_at'] = post.created_at
 
         likes = [l.to_dict() for l in storage.all(Like).values() if l.post_id == post.id]
         feed_data['likes'] = likes
@@ -141,6 +142,7 @@ def get_comments(post_id):
         'id': post['id'],
         'content': post['content'],
         'image_url': post['image_url'],
+        'created_at': post_inst.created_at,
     }
     comments = [c.to_dict() for c in storage.all(Comment, post_id=post_id).values() if c.post_id == post_id]
 

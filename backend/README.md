@@ -1,5 +1,4 @@
 # WeSync API
-
 Welcome consumer!!
 
 ## Table of Contents

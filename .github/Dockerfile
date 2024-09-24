@@ -5,7 +5,7 @@ FROM python:3.12.6-bookworm AS base
 WORKDIR /app
 
 # Copy the requirements.txt file to the working directory
-COPY backend/requirements.txt ./backend/
+COPY backends/requirements.txt ./backend/
 
 # Install the Python dependencies
 RUN pip install --no-cache-dir -r backend/requirements.txt

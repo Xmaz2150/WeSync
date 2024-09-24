@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from './Logo';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import '../assets/css/sidebar.css';
 //import '../assets/css/custom-styles.css';
@@ -41,10 +42,7 @@ const Sidebar = ({ token, setToken, imageUrl, setImageUrl }) => {
         <h1 className="visually-hidden">Sidebars examples</h1>
 
         <div className="d-flex flex-column flex-shrink-0 bg-body-tertiary" style={{ width: '4.5rem' }}>
-          <a href="/" className="d-block p-3 link-body-emphasis text-decoration-none" title="Icon-only" data-bs-toggle="tooltip" data-bs-placement="right">
-            <svg className="bi pe-none" width="40" height="32"><use xlinkHref="#bootstrap" /></svg>
-            <span className="visually-hidden">Icon-only</span>
-          </a>
+          <Logo className="m-5" width={60}/>
           <ul className="nav nav-pills nav-flush flex-column mb-auto text-center">
             <li className="nav-item">
               <Link to="/" className="nav-link active py-3 border-bottom rounded-0" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">

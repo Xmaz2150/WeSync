@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from './Logo';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import '../assets/css/sign-in.css';
@@ -10,9 +12,8 @@ const SignInForm = ({ email, setEmail, password, setPassword, handleSubmit, erro
     return (
       <main className="form-signin position-absolute top-50 start-50 translate-middle">
         <form onSubmit={handleSubmit}>
-          <img className="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
+          <Logo width={130}/>
           <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
-  
           <div className="form-floating">
             <input
               type="email"

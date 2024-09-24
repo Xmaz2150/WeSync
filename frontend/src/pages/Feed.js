@@ -13,7 +13,7 @@ const Feed = () => {
     const fetchFeed = async () => {
       try {
         const response = await allFeeds();
-        setPosts(response.data);
+        setPosts(response.data.reverse());
         console.log(response.data);
       } catch (error) {
         console.log('Error fetching feed:', error);

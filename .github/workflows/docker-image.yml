@@ -40,11 +40,16 @@ jobs:
           source env/bin/activate
           pip install -r requirements.txt
 
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
       # Build the Docker image
       - name: Build the Docker image
         run: |
           docker build . --file .github/Dockerfile --tag zirahhh/wesync:1.0
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push zirahhh/wesync:1.0
           
 

@@ -172,3 +172,4 @@ def update_profile_pic():
 
     current_user.save()
     return jsonify({"new_data": new_data}), 201
+

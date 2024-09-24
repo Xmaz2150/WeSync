@@ -42,4 +42,4 @@ jobs:
 
       # Build the Docker image
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+        run: docker build . --file .github/workflows/Dockerfile --tag my-image-name:$(date +%s)

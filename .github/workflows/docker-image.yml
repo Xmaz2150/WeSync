@@ -1,44 +1,25 @@
-name: Docker Image CI
+name: Build Docker Image
 
 on:
-  push:
-    branches: [ "master" ]
+  workflow_call:
+    inputs:
+      image_name:
+        required: true
+        type: string
+      dockerfile:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
 
 jobs:
   build:
-    # Specify Ubuntu version
     runs-on: ubuntu-24.04
 
     steps:
-      # Checkout the repository
       - name: Check out repository
         uses: actions/checkout@v4
-
-      # Setup Python version (specify the desired version here)
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'  # Specify Python version
-
-      # Set up Node.js version (specify the desired version here)
-      - name: Set up Node.js 22.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: '22.x'  # Specify Node.js version
-
-      # Install Node.js packages for frontend
-      - name: Install frontend dependencies
-        run: |
-          cd frontend
-          npm install
-
-      # Set up Python environment and install Flask for backend
-      - name: Set up Python environment for backend
-        run: |
-          cd backend
-          python -m venv env
-          source env/bin/activate
-          pip install -r requirements.txt
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -46,10 +27,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Build the Docker image
       - name: Build the Docker image
         run: |
-          docker build . --file .github/Dockerfile --tag zirahhh/wesync:1.0
-          docker push zirahhh/wesync:1.0
-          
-
+          docker build . --file ${{ inputs.dockerfile }} --tag ${{ inputs.image_name }}:${{ inputs.version }}
+          docker push ${{ inputs.image_name }}

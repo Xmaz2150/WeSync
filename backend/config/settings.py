@@ -7,7 +7,7 @@ class Config:
     WSYNC_PGSQL_USER = getenv('WSYNC_PGSQL_USER', 'postgres')
     WSYNC_PGSQL_PWD = getenv('WSYNC_PGSQL_PWD', 'root')
     WSYNC_PGSQL_HOST_PORT = getenv('WSYNC_PGSQL_HOST_PORT', '5432')
-    WSYNC_PGSQL_HOST = getenv('WSYNC_PGSQL_HOST', 'postgres:{}'.format(WSYNC_PGSQL_HOST_PORT))
+    WSYNC_PGSQL_HOST = getenv('WSYNC_PGSQL_HOST', 'localhost:{}'.format(WSYNC_PGSQL_HOST_PORT))
     WSYNC_PGSQL_DB = getenv('WSYNC_PGSQL_DB', 'wesync')
     POSTGRESQL_DATABASE_URI = getenv(
         'DATABASE_URL') or 'postgresql+psycopg2://{}:{}@{}/{}'.format(

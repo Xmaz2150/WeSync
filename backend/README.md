@@ -17,4 +17,3 @@ Welcome consumer!!
     ```sh
     http GET :5000/wesync/img/<filename> 
     ```
-

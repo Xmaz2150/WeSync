@@ -18,4 +18,3 @@ Welcome consumer!!
     http GET :5000/wesync/img/<filename> 
     ```
 
-

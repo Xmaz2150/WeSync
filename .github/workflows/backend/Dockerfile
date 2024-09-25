@@ -17,4 +17,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
 
 # Command to run both apps
-CMD ["sh", "-c", "IS_SU=su SECRET_KEY=the_secret JWT_SECRET_KEY=the_jwt_secret python3 app.py"]
+CMD ["sh", "-c", "python3 app.py"]

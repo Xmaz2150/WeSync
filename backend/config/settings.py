@@ -4,14 +4,18 @@ class Config:
     """ Platform settings """
 
     ''' Database Initialization '''
-    WSYNC_PGSQL_USER = getenv('WSYNC_PGSQL_USER', 'postgres')
-    WSYNC_PGSQL_PWD = getenv('WSYNC_PGSQL_PWD', 'root')
+    WSYNC_PGSQL_USER = getenv('WSYNC_PGSQL_USER')
+    WSYNC_PGSQL_PWD = getenv('WSYNC_PGSQL_PWD')
     WSYNC_PGSQL_HOST_PORT = getenv('WSYNC_PGSQL_HOST_PORT', '5432')
-    WSYNC_PGSQL_HOST = getenv('WSYNC_PGSQL_HOST', 'localhost:{}'.format(WSYNC_PGSQL_HOST_PORT))
+    WSYNC_PGSQL_HOST = getenv('WSYNC_PGSQL_HOST', 'localhost')
     WSYNC_PGSQL_DB = getenv('WSYNC_PGSQL_DB', 'wesync')
+    WSYNC_PGSQL_C_HOST = '{}:{}'.format(WSYNC_PGSQL_HOST, WSYNC_PGSQL_HOST_PORT)
     POSTGRESQL_DATABASE_URI = getenv(
         'DATABASE_URL') or 'postgresql+psycopg2://{}:{}@{}/{}'.format(
-            WSYNC_PGSQL_USER, WSYNC_PGSQL_PWD, WSYNC_PGSQL_HOST, WSYNC_PGSQL_DB
+            WSYNC_PGSQL_USER,
+            WSYNC_PGSQL_PWD,
+            WSYNC_PGSQL_C_HOST,
+            WSYNC_PGSQL_DB
     )
 
     ''' Administrative Options'''

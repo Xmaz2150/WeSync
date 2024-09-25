@@ -45,13 +45,4 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            git clone https://github.com/Xmaz2150/WeSync.git
-            cd WeSync/backend && python3 -m venv env
-            source env/bin/activate
-            pip install -r requirements.txt
-            JWT_ACCESS_TOKEN_EXPIRES=${{ secrets.JWT_ACCESS_TOKEN_EXPIRES }} \
-              WSYNC_ENV=${{ secrets.WSYNC_ENV }} \
-              IS_SU=${{ secrets.IS_SU }} \
-              SECRET_KEY=${{ secrets.SECRET_KEY }} \
-              JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
-              flask run
+            echo "Logged in !!"

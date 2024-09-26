@@ -74,6 +74,8 @@ jobs:
                   ${{ matrix.image_name }}:${{ matrix.version }}
             else [ "${{ matrix.directory }}" == "frontend" ]; then
                 docker run -d --name ${{ matrix.container_name }} \
+            else [ "${{ matrix.directory }}" == "frontend" ]; then
+                -e REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }} \
                 -p 3000:3000 \
                 ${{ matrix.image_name }}:${{ matrix.version }}
             fi

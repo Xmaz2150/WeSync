@@ -46,6 +46,7 @@ def register():
 
 @user_views.route('/login', methods=['POST'], strict_slashes=False)
 def login():
+    """ logs in user """
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')

@@ -8,6 +8,7 @@ const API_BASE_URL = `${BASE_URL}:5000/wesync`;
 const API_P_BASE_URL = `${BASE_URL}:5000/social/users`;
 const API_C_BASE_URL = `${BASE_URL}:5000/social`;
 
+
 const getJwt = () => {
   return localStorage.getItem('token');;
 }

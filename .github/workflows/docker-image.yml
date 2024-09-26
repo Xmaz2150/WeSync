@@ -35,7 +35,14 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image for backend
+        if: contains(github.event.head_commit.message, 'backend/')
+        run: |
+          docker build . --file ${{ matrix.dockerfile }} --tag ${{ matrix.image_name }}:${{ matrix.version }}
+          docker push ${{ matrix.image_name }}:${{ matrix.version }}
+
+      - name: Build and push Docker image for frontend
+        if: contains(github.event.head_commit.message, 'frontend/')
         run: |
           docker build . --file ${{ matrix.dockerfile }} --tag ${{ matrix.image_name }}:${{ matrix.version }}
           docker push ${{ matrix.image_name }}:${{ matrix.version }}

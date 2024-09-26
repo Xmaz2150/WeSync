@@ -146,7 +146,9 @@ export const allFeeds = () => {
   });
 };
 
-
+/**
+ * COMMENTS
+ */
 export const addNewComment = (postId, data) => {
   return axios.post(`${API_C_BASE_URL}/posts/comment/${postId}`, data, {
     headers: {
@@ -164,7 +166,9 @@ export const postAndAllComments = (postId) => {
   });
 };
 
-
+/**
+ * POSTS
+ */
 export const addNewPostWithPicture = (formData) => {
   return axios.post(`${API_C_BASE_URL}/posts`, formData, {
     headers: {

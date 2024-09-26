@@ -15,7 +15,7 @@ from utils.file import upload_file, rename_file
 
 @user_views.route('/register', methods=['POST'], strict_slashes=False)
 def register():
-    """ """
+    """ Registers user"""
     data = request.get_json()
     username = data.get('username')
     email = data.get('email')

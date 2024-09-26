@@ -44,7 +44,7 @@ def method_not_allowed(e):
 
 @app.route('/')
 def home():
-    return jsonify('Welcome to WeSync API')
+    return jsonify({"message": "Welcome to WeSync API"})
 
 @app.route('/wesync/img/<filename>', methods=['GET'])
 def serve_image(filename):

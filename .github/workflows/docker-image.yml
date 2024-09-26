@@ -49,33 +49,52 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             if [ "$(docker ps -q -f name=${{ matrix.container_name }})" ]; then
-                    echo "Stopping and removing running container: ${{ matrix.container_name }}"
-                    docker stop ${{ matrix.container_name }}
-                    docker rm ${{ matrix.container_name }}
+              echo "Stopping and removing running container: ${{ matrix.container_name }}"
+              docker stop ${{ matrix.container_name }}
+              docker rm ${{ matrix.container_name }}
             elif [ "$(docker ps -aq -f name=${{ matrix.container_name }})" ]; then
-                    echo "Removing non running container: ${{ matrix.container_name }}"
-                    docker rm ${{ matrix.container_name }}
+              echo "Removing non running container: ${{ matrix.container_name }}"
+              docker rm ${{ matrix.container_name }}
             fi
 
             docker pull ${{ matrix.image_name }}:${{ matrix.version }}
 
-            if [ "${{ matrix.directory }}" == "backend" ]; then
-              docker run -d --name ${{ matrix.container_name }} \
-                  -e WSYNC_PGSQL_USER=${{ secrets.WSYNC_PGSQL_USER }} \
-                  -e WSYNC_PGSQL_PWD=${{ secrets.SYNC_PGSQL_PWD }} \
-                  -e WSYNC_PGSQL_HOST=${{ secrets.WSYNC_PGSQL_HOST }} \
-                  -e WSYNC_PGSQL_HOST_PORT=${{ secrets.WSYNC_PGSQL_HOST_PORT }} \
-                  -e WSYNC_ENV=${{ secrets.WSYNC_ENV }} \
-                  -e IS_SU=${{ secrets.IS_SU }} \
-                  -e SECRET_KEY=${{ secrets.SECRET_KEY }} \
-                  -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
-                  --add-host ${{ secrets.DB_HOST }} \
-                  -p 5000:5000 \
-                  ${{ matrix.image_name }}:${{ matrix.version }}
-            else [ "${{ matrix.directory }}" == "frontend" ]; then
-                docker run -d --name ${{ matrix.container_name }} \
-                -p 3000:3000 \
-                ${{ matrix.image_name }}:${{ matrix.version }}
+            docker run -d --name ${{ matrix.container_name }} \
+              -e WSYNC_PGSQL_USER=${{ secrets.WSYNC_PGSQL_USER }} \
+              -e WSYNC_PGSQL_PWD=${{ secrets.WSYNC_PGSQL_PWD }} \
+              -e WSYNC_PGSQL_HOST=${{ secrets.WSYNC_PGSQL_HOST }} \
+              -e WSYNC_PGSQL_HOST_PORT=${{ secrets.WSYNC_PGSQL_HOST_PORT }} \
+              -e WSYNC_ENV=${{ secrets.WSYNC_ENV }} \
+              -e IS_SU=${{ secrets.IS_SU }} \
+              -e SECRET_KEY=${{ secrets.SECRET_KEY }} \
+              -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
+              --add-host ${{ secrets.DB_HOST }} \
+              -p 5000:5000 \
+              ${{ matrix.image_name }}:${{ matrix.version }}
+
+            docker image prune -a -f
+
+      - name: SSH into server and pull latest frontend image
+        if: matrix.directory == 'frontend'
+        uses: appleboy/ssh-action@v0.1.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            if [ "$(docker ps -q -f name=${{ matrix.container_name }})" ]; then
+              echo "Stopping and removing running container: ${{ matrix.container_name }}"
+              docker stop ${{ matrix.container_name }}
+              docker rm ${{ matrix.container_name }}
+            elif [ "$(docker ps -aq -f name=${{ matrix.container_name }})" ]; then
+              echo "Removing non running container: ${{ matrix.container_name }}"
+              docker rm ${{ matrix.container_name }}
             fi
+
+            docker pull ${{ matrix.image_name }}:${{ matrix.version }}
+
+            docker run -d --name ${{ matrix.container_name }} \
+              -p 3000:3000 \
+              ${{ matrix.image_name }}:${{ matrix.version }}
 
             docker image prune -a -f

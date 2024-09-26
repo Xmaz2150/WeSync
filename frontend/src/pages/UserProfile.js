@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import { getUserProfile } from '../utils/api';
 import ProfileComponent from '../components/ProfileComponent';
 
-import '../assets/css/profile.css';
+import { IMAGE_SERVER_URL } from '../utils/api';
 
-const IMAGE_SERVER = 'http://localhost:5000';
+import '../assets/css/profile.css';
 
 const UserProfile = () => {
 
@@ -32,7 +32,7 @@ const UserProfile = () => {
     return <div>Loading...</div>;
   }
 
-  return <ProfileComponent user={user} imageUrl={`${IMAGE_SERVER}/${user.image_url}`} isUser={false}/>;
+  return <ProfileComponent user={user} imageUrl={`${IMAGE_SERVER_URL}/${user.image_url}`} isUser={false}/>;
 };
 
 export default UserProfile;

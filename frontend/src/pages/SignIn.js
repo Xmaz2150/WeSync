@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { login } from '../utils/api';
 import SignInForm from '../components/SignInForm';
 
-const IMAGE_SERVER = 'http://localhost:5000';
+import { IMAGE_SERVER_URL } from '../utils/api';
 
 const Login = ({ setToken, setImageUrl }) => {
   const [email, setEmail] = useState('');
@@ -15,7 +15,7 @@ const Login = ({ setToken, setImageUrl }) => {
       const response = await login({ email, password });
       const { access_token, image_url } = response.data;
       localStorage.setItem('token', access_token);
-      const imageUrl = IMAGE_SERVER + '/' + image_url;
+      const imageUrl = `${IMAGE_SERVER_URL}/${image_url}`;
       localStorage.setItem('imageUrl', imageUrl);
       setToken(access_token);
       setImageUrl(imageUrl);

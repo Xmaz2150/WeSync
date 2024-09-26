@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+
+import { addNewPost, addNewPostWithPicture } from '../utils/api';
 
 const NewPost = () => {
   const [file, setFile] = useState(null);
@@ -25,23 +26,13 @@ const NewPost = () => {
         formData.append('file', file);
         formData.append('content', content);
 
-        response = await axios.post('http://localhost:5000/social/posts', formData, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'multipart/form-data'
-          }
-        });
+        response = await addNewPostWithPicture(formData);
       } else {
         const data = {
           content: content
         };
 
-        response = await axios.post('http://localhost:5000/social/posts', data, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'application/json'
-          }
-        });
+        response = await addNewPost(data);
       }
       console.log(response.data);
       navigate('/feed');

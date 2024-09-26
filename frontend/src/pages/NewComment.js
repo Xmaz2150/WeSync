@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+
+import { addNewComment } from '../utils/api';
 
 const NewComment = () => {
   const { postId } = useParams();
@@ -18,12 +19,7 @@ const NewComment = () => {
     };
 
     try {
-      const response = await axios.post(`http://localhost:5000/social/posts/comment/${postId}`, data, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await addNewComment(postId, data);
       console.log(response.data);
       navigate('/feed');
     } catch (error) {

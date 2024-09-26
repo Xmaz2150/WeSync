@@ -12,7 +12,6 @@ import NewComment from "./pages/NewComment";
 import CommentsPage from "./pages/Comments";
 import Followers from "./pages/Followers";
 import Following from "./pages/Following";
-import Users from "./pages/Users";
 import SearchUsers from "./pages/SearchUsers";
 import UpdateProfile from "./pages/UpdateProfile";
 
@@ -45,9 +44,8 @@ function App() {
         <Route path="/comments/:postId" element={<PrivateRoute><CommentsPage /></PrivateRoute>} />
 
         <Route path="/followers/:userId" element={<PrivateRoute><Followers /></PrivateRoute>} />
-        <Route path="/following/:userId" element={<PrivateRoute><Following /></PrivateRoute>} />
+        <Route path="/following/:userId" element={<PrivateRoute><Following /></PrivateRoute>} />\
 
-        <Route path="/users/" element={<PrivateRoute><Users /></PrivateRoute>} />
         <Route path="/searchUsers/" element={<PrivateRoute><SearchUsers /></PrivateRoute>} />
         <Route path="/updateProfile/" element={<PrivateRoute><UpdateProfile /></PrivateRoute>} />
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const IMAGE_SERVER_URL = 'http://localhost:5000';
+import { IMAGE_SERVER_URL } from '../utils/api';
 
 const UserSection = ({ user, time }) => {
   const navigate = useNavigate();

@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import '../assets/css/feed.css';
 import '../assets/css/custom-styles.css';
+import { IMAGE_SERVER_URL } from '../utils/api';
 
-const IMAGE_SERVER_URL = 'http://localhost:5000';
 const DEFAULT_POST_IMAGE = `${IMAGE_SERVER_URL}/wesync/img/text_place_holder1.jpg`;
 
 const ProfileComponent = ({ user, imageUrl, isUser}) => {

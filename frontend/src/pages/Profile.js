@@ -3,8 +3,6 @@ import { getProfile } from '../utils/api';
 import ProfileComponent from '../components/ProfileComponent';
 import '../assets/css/profile.css';
 
-const IMAGE_SERVER = 'http://localhost:5000';
-
 const Profile = (imageUrl) => {
 
   const [user, setUser] = useState(null);

@@ -1,7 +1,12 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/wesync';
-const API_P_BASE_URL = 'http://localhost:5000/social/users';
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost';
+console.log(BASE_URL);
+
+export const IMAGE_SERVER_URL = `${BASE_URL}:5000`;
+const API_BASE_URL = `${BASE_URL}:5000/wesync`;
+const API_P_BASE_URL = `${BASE_URL}:5000/social/users`;
+const API_C_BASE_URL = `${BASE_URL}:5000/social`;
 
 const getJwt = () => {
   return localStorage.getItem('token');;
@@ -124,7 +129,7 @@ export const queryUsers = (query) => {
 
 
 export const likePost = (postId) => {
-  return axios.post(`http://localhost:5000/social/posts/like/${postId}`, {}, {
+  return axios.post(`${API_C_BASE_URL}/posts/like/${postId}`, {}, {
     headers: {
       'Authorization': `Bearer ${getJwt()}`,
       'Content-Type': 'application/json'
@@ -133,7 +138,7 @@ export const likePost = (postId) => {
 };
 
 export const allFeeds = () => {
-  return axios.get('http://localhost:5000/social/feed', {
+  return axios.get(`${API_C_BASE_URL}/feed`, {
     headers: {
       'Authorization': `Bearer ${getJwt()}`,
     }
@@ -141,10 +146,38 @@ export const allFeeds = () => {
 };
 
 
+export const addNewComment = (postId, data) => {
+  return axios.post(`${API_C_BASE_URL}/posts/comment/${postId}`, data, {
+    headers: {
+      'Authorization': `Bearer ${getJwt()}`,
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
 export const postAndAllComments = (postId) => {
-  return axios.get(`http://localhost:5000/social/posts/comments/${postId}`, {
+  return axios.get(`${API_C_BASE_URL}/posts/comments/${postId}`, {
     headers: {
       'Authorization': `Bearer ${getJwt()}`
+    }
+  });
+};
+
+
+export const addNewPostWithPicture = (formData) => {
+  return axios.post(`${API_C_BASE_URL}/posts`, formData, {
+    headers: {
+      'Authorization': `Bearer ${getJwt()}`,
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+};
+
+export const addNewPost = (data) => {
+  return axios.post(`${API_C_BASE_URL}/posts`, data, {
+    headers: {
+      'Authorization': `Bearer ${getJwt()}`,
+      'Content-Type': 'application/json'
     }
   });
 };

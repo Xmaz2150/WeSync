@@ -75,7 +75,7 @@ def login():
 @user_views.route("/profile", methods=["GET"], strict_slashes=False)
 @jwt_required()
 def get_profile():
-
+    """ Get's logged in user's profile """
     likes = [l.to_dict() for l in storage.all(Like, user_id=current_user.id).values() if l.user_id == current_user.id]
     posts = [p.to_dict() for p in storage.all(Post, user_id=current_user.id).values() if p.user_id == current_user.id]
     followers = [f.to_dict().get('follower_id') for f in storage.all(Follow, follower_id=current_user.id).values() if f.followed_id == current_user.id]

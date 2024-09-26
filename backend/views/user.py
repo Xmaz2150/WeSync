@@ -96,7 +96,7 @@ def get_profile():
 @user_views.route("/user/<user_id>", methods=["GET"], strict_slashes=False)
 @jwt_required()
 def get_user_profile(user_id):
-    """ """
+    """ Get's user's profile """
 
     if not user_id:
         return jsonify({"message": "Invalid data!"}), 400

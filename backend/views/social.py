@@ -302,37 +302,6 @@ def get_following(user_id):
 
     return jsonify(following), 200
 
-@platform_views.route('/users/search/<username>', methods=['GET'])
-@jwt_required()
-def search_users(username):
-    ''' Searches for users by username '''
-
-    if not username:
-        return jsonify({"message": "Invalid data!"}), 400
-    
-    if username == 'all':
-        users_dicts = [u.to_dict() for u in storage.all(User).values()]
-
-        users = []
-        for user in users_dicts:
-            del user['password_hash']
-            del user['role']
-            users.append(user)
-        if len(users) == 0:
-            return jsonify({"message": "No users found!"}), 404
-        return jsonify(users), 200
-    
-    users_dicts = [u.to_dict() for u in storage.all(User).values() if username in u.username]
-
-    users = []
-    for user in users_dicts:
-        del user['password_hash']
-        del user['role']
-        users.append(user)
-
-    if len(users) == 0:
-        return jsonify({"message": "No users found!"}), 404
-    return jsonify(users), 200
 
 @platform_views.route("/users/search", methods=["GET"], strict_slashes=False)
 @jwt_required()

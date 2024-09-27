@@ -144,11 +144,25 @@ def get_comments(post_id):
         'image_url': post['image_url'],
         'created_at': post_inst.created_at,
     }
-    comments = [c.to_dict() for c in storage.all(Comment, post_id=post_id).values() if c.post_id == post_id]
+    comments = [c for c in storage.all(Comment, post_id=post_id).values() if c.post_id == post_id]
+    comments_data = []
+    for comment in comments:
+        user = storage.get(User, id=comment.user_id).to_dict()
+        comment_data = {
+            'user_data': {
+                'id': user['id'],
+                'username': user['username'],
+                'image_url': user['image_url'],
+            },
+            'id': comment.id,
+            'content': comment.content,
+            'created_at': comment.created_at,
+        }
+        comments_data.append(comment_data)
 
     return jsonify({
         'post_data': post_data,
-        'comments': comments,
+        'comments': comments_data,
     }), 200
 
 @platform_views.route('/posts/like/<post_id>', methods=['POST'])

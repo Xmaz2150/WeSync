@@ -125,8 +125,7 @@ def get_user_profile(user_id):
 @user_views.route('/profile/update', methods=['POST'])
 @jwt_required()
 def update_profile_pic():
-    '''  '''
-
+    """ Updates user's profile """
     if 'file' in request.files:
         file = request.files['file']
 

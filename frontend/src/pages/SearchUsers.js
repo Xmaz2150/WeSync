@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { UserSection } from '../components/UserSection';
 import { followUser, unfollowUser, queryUsers } from '../utils/api';
 
+import '../assets/css/custom-styles.css';
+
 const SearchUsers = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -47,13 +49,17 @@ const SearchUsers = () => {
         <button type="submit" className="btn btn-primary mt-2">Search</button>
       </form>
       {error && <div>{error}</div>}
+      <div className="mt-3">
       {results.map((user, index) => (
-        <div key={index}>
+        <div key={index} className="user-follow-card">
           <UserSection user={user} />
-          <button onClick={() => handleFollow(user.id)} className="btn btn-success">Follow</button>
-          <button onClick={() => handleUnfollow(user.id)} className="btn btn-danger">Unfollow</button>
+          <div className="">
+            <button onClick={() => handleFollow(user.id)} className="btn btn-success">Follow</button>
+            <button onClick={() => handleUnfollow(user.id)} className="btn btn-danger">Unfollow</button>
+          </div>
         </div>
       ))}
+      </div>
     </div>
   );
 };

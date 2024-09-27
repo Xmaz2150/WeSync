@@ -5,6 +5,8 @@ import { UserSection } from '../components/UserSection';
 
 import { followingUsers, unfollowUser } from '../utils/api';
 
+import '../assets/css/custom-styles.css';
+
 const Following = () => {
   const { userId } = useParams();
   const [following, setFollowing] = useState([]);
@@ -41,7 +43,7 @@ const Following = () => {
     <div className="inside-elements p-3 bg-body rounded shadow-sm">
       <h1>Following</h1>
       {following.map((following, index) => (
-        <div key={index}>
+        <div key={index} className="user-follow-card">
           <UserSection user={following} />
           <button onClick={() => handleUnfollow(following.id)} className="btn btn-danger">Unfollow</button>
         </div>

@@ -2,7 +2,6 @@ from typing import cast
 
 from flask import jsonify, request, redirect, url_for
 from models import storage
-from utils.file import upload_file, rename_file
 from config.settings import Config
 from datetime import datetime
 from models.models import User, Follow, Post, Comment, Like
@@ -43,18 +42,21 @@ def create_post():
         user_id = current_user.id,
         content = content,
     )
+    new_post.save()
 
     if file:
-        image_name = upload_file(file)
-        new_post.image_url = image_name
-        new_post.save()
+        from utils.image_storage import ImageStorage
+        image_storage = ImageStorage()
         
         ''' Workaround to make image_url saveable with correct url'''
-        post_update = storage.get(Post, id=new_post.id)
+        if not image_storage.allowed_file(file.filename):
+            return jsonify({"message": 'Supportted formats: {}'.format(' '.join(Config.ALLOWED_EXTENSIONS))}), 400
+
+        image_name = '{}.{}'.format(new_post.id, file.filename)
         url_prefix = Config.IMG_URL_PREFIX
-        post_update.image_url = '{}{}.{}'.format(url_prefix, new_post.id, image_name)
-        rename_file(image_name, '{}.{}'.format(new_post.id, image_name))
-        post_update.save()
+        new_post.image_url = '{}{}'.format(url_prefix, image_name)
+        image_storage.upload_file(file, image_name)
+        new_post.save()
     else:
         new_post.save()
 

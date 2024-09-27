@@ -6,8 +6,6 @@ from config.settings import Config
 from flask_jwt_extended import create_access_token, jwt_required, current_user
 from views import user_views
 
-from utils.file import upload_file, rename_file
-
 
 """
     REGISTRATION & LOGIN
@@ -158,14 +156,18 @@ def update_profile_pic():
         new_data['city'] = city
 
     if file:
-        image_name = upload_file(file)
-        if not image_name:
+        from utils.image_storage import ImageStorage
+        image_storage = ImageStorage()
+        
+        ''' Workaround to make image_url saveable with correct url'''
+        if not image_storage.allowed_file(file.filename):
             return jsonify({"message": 'Supportted formats: {}'.format(' '.join(Config.ALLOWED_EXTENSIONS))}), 400
 
+        image_name = '{}.{}'.format(current_user.id, file.filename)
         url_prefix = Config.IMG_URL_PREFIX
-        current_user.image_url = '{}{}.{}'.format(url_prefix, current_user.id, image_name)
-        new_data['image_url'] = current_user.image_url
-        rename_file(image_name, '{}.{}'.format(current_user.id, image_name))
+        current_user.image_url = '{}{}'.format(url_prefix, image_name)
+        image_storage.upload_file(file, image_name)
+        current_user.save()
 
     if len(new_data) == 0:
         return jsonify({"message": "No data provided!"}), 400

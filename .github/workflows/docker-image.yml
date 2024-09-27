@@ -60,22 +60,22 @@ jobs:
 
             if [ "${{ matrix.directory }}" == "backend" ]; then
               docker run -d --name ${{ matrix.container_name }} \
-                  -e WSYNC_PGSQL_USER=${{ secrets.WSYNC_PGSQL_USER }} \
-                  -e WSYNC_PGSQL_PWD=${{ secrets.SYNC_PGSQL_PWD }} \
-                  -e WSYNC_PGSQL_HOST=${{ secrets.WSYNC_PGSQL_HOST }} \
-                  -e WSYNC_PGSQL_HOST_PORT=${{ secrets.WSYNC_PGSQL_HOST_PORT }} \
-                  -e WSYNC_ENV=${{ secrets.WSYNC_ENV }} \
-                  -e IS_SU=${{ secrets.IS_SU }} \
-                  -e SECRET_KEY=${{ secrets.SECRET_KEY }} \
-                  -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
-                  --add-host ${{ secrets.DB_HOST }} \
-                  -p 5000:5000 \
-                  ${{ matrix.image_name }}:${{ matrix.version }}
+                -e WSYNC_PGSQL_USER=${{ secrets.WSYNC_PGSQL_USER }} \
+                -e WSYNC_PGSQL_PWD=${{ secrets.SYNC_PGSQL_PWD }} \
+                -e WSYNC_PGSQL_HOST=${{ secrets.WSYNC_PGSQL_HOST }} \
+                -e WSYNC_PGSQL_HOST_PORT=${{ secrets.WSYNC_PGSQL_HOST_PORT }} \
+                -e WSYNC_ENV=${{ secrets.WSYNC_ENV }} \
+                -e IS_SU=${{ secrets.IS_SU }} \
+                -e SECRET_KEY=${{ secrets.SECRET_KEY }} \
+                -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
+                --add-host ${{ secrets.DB_HOST }} \
+                -p 5000:5000 \
+                ${{ matrix.image_name }}:${{ matrix.version }}
             elif [ "${{ matrix.directory }}" == "frontend" ]; then
-                docker run -d --name ${{ matrix.container_name }} \
-                  -e REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }} \
-                  -p 3000:3000 \
-                  ${{ matrix.image_name }}:${{ matrix.version }}
+              docker run -d --name ${{ matrix.container_name }} \
+                -e REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }} \
+                -p 3000:3000 \
+                ${{ matrix.image_name }}:${{ matrix.version }}
             fi
 
             docker image prune -a -f

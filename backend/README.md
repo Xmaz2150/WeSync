@@ -5,8 +5,9 @@ Welcome consumer!!
 - [API Endpoints](#api-endpoints)
 - [Image Server](#image-server)
 
-## API Endpoints
+# API Endpoints
 
+## User
 ### User Registration
 
 - **Endpoint:** `/wesync/register`

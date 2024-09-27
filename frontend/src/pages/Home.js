@@ -10,7 +10,6 @@ const Home = () => {
       </header>
       <main>
         <section className="home-actions">
-          <Link to="/signin" className="btn">Sign In</Link>
           <Link to="/feed" className="btn">View Feed</Link>
         </section>
       </main>

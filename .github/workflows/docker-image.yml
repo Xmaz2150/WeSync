@@ -61,7 +61,7 @@ jobs:
             if [ "${{ matrix.directory }}" == "backend" ]; then
               docker run -d --name ${{ matrix.container_name }} \
                 -e WSYNC_PGSQL_USER=${{ secrets.WSYNC_PGSQL_USER }} \
-                -e WSYNC_PGSQL_PWD=${{ secrets.SYNC_PGSQL_PWD }} \
+                -e WSYNC_PGSQL_PWD=${{ secrets.WSYNC_PGSQL_PWD }} \
                 -e WSYNC_PGSQL_HOST=${{ secrets.WSYNC_PGSQL_HOST }} \
                 -e WSYNC_PGSQL_HOST_PORT=${{ secrets.WSYNC_PGSQL_HOST_PORT }} \
                 -e WSYNC_ENV=${{ secrets.WSYNC_ENV }} \

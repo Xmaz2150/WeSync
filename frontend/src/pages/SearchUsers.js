@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import UserSection from '../components/UserSection';
+import { UserSection } from '../components/UserSection';
 import { followUser, unfollowUser, queryUsers } from '../utils/api';
 
 const SearchUsers = () => {

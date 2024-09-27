@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import UserSection from '../components/UserSection';
+import { UserSection } from '../components/UserSection';
 import NotFound from '../components/errors/NotFound';
 
 import { removeFollower, allFollowers } from '../utils/api';

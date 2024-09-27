@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import NotFound from '../components/errors/NotFound';
-import UserSection from '../components/UserSection';
+import { UserSection } from '../components/UserSection';
 
 import { followingUsers, unfollowUser } from '../utils/api';
 

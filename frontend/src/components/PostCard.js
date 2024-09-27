@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router-dom'
 
 import { likePost } from '../utils/api';
-import UserSection from './UserSection';
+import { UserSection } from './UserSection';
 import '../assets/css/custom-styles.css';
 
 import { IMAGE_SERVER_URL } from '../utils/api';

@@ -3,6 +3,8 @@ from os import getenv
     CONFIGURATION of the APPLICATION
     IMPORTANT ENV VARS Docs comming sooon!!
 """
+
+
 class Config:
     """ Platform settings """
 

@@ -3,3 +3,4 @@ flask_jwt_extended
 sqlalchemy
 psycopg2-binary
 flask_cors
+boto3

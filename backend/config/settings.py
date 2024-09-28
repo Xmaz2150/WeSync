@@ -1,6 +1,6 @@
 from os import getenv
 """
-    CONFIGURATION of the APPLICATION
+    CONFIGURATIONS of the APPLICATION
     IMPORTANT ENV VARS Docs comming sooon!!
 """
 

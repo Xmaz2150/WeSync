@@ -3,9 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import '../assets/css/feed.css';
 import '../assets/css/custom-styles.css';
-import { IMAGE_SERVER_URL } from '../utils/api';
-
-const DEFAULT_POST_IMAGE = `${IMAGE_SERVER_URL}/wesync/img/text_place_holder1.jpg`;
+import { DEFAULT_POST_IMAGE, IMAGE_SERVER_URL } from '../utils/api';
 
 const ProfileComponent = ({ user, imageUrl, isUser}) => {
   const navigate = useNavigate();
@@ -123,7 +121,7 @@ const ProfileComponent = ({ user, imageUrl, isUser}) => {
                     <div className="col mb-2" key={index}>
                       {
                         (post.image_url)
-                        ? <img src={`${IMAGE_SERVER_URL}/${post.image_url}`} alt={`Recent post ${index + 1}`} className="rounded-3 w-50" onClick={() => handlePostClick(post.id)}/>
+                        ? <img src={`${IMAGE_SERVER_URL}${post.image_url}`} alt={`Recent post ${index + 1}`} className="rounded-3 w-50" onClick={() => handlePostClick(post.id)}/>
                         : <img src={`${DEFAULT_POST_IMAGE}`} alt={`Recent post ${index + 1}`} className="rounded-3 w-50" onClick={() => handlePostClick(post.id)}/>
                       }
                     </div>

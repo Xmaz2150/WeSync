@@ -15,7 +15,7 @@ const Login = ({ setToken, setImageUrl }) => {
       const response = await login({ email, password });
       const { access_token, image_url } = response.data;
       localStorage.setItem('token', access_token);
-      const imageUrl = `${IMAGE_SERVER_URL}/${image_url}`;
+      const imageUrl = `${IMAGE_SERVER_URL}${image_url}`;
       localStorage.setItem('imageUrl', imageUrl);
       setToken(access_token);
       setImageUrl(imageUrl);

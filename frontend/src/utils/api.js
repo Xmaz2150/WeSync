@@ -3,7 +3,9 @@ import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost';
 console.log(BASE_URL);
 
-export const IMAGE_SERVER_URL = `${BASE_URL}:5000`;
+const IMAGE_URL_PREFIX = process.env.REACT_APP || '/wesync/img';
+export const IMAGE_SERVER_URL = process.env.REACT_APP_CDN_URL || `${BASE_URL}:5000/wesync/img/`;
+export const DEFAULT_POST_IMAGE = `${IMAGE_SERVER_URL}${IMAGE_URL_PREFIX}/text_place_holder1.jpg`;
 const API_BASE_URL = `${BASE_URL}:5000/wesync`;
 const API_P_BASE_URL = `${BASE_URL}:5000/social/users`;
 const API_C_BASE_URL = `${BASE_URL}:5000/social`;

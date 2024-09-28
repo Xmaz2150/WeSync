@@ -32,7 +32,7 @@ export const UserSection = ({ user, time }) => {
   return (
     <div className="d-flex">
       <img 
-        src={`${IMAGE_SERVER_URL}/${user.image_url}`} 
+        src={`${IMAGE_SERVER_URL}${user.image_url}`} 
         width="32" 
         height="32" 
         className="bd-placeholder-img flex-shrink-0 me-2 rounded" 

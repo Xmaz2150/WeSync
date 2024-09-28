@@ -33,7 +33,7 @@ const PostCard = ({ post }) => {
       <UserSection user={post.user_data} time={post.created_at}/>
       <p className="mt-2 d-flex flex-column">
         {post.content}
-        {post.image_url && <img className="w-75" src={`${IMAGE_SERVER_URL}/${post.image_url}`} alt="Post" />}
+        {post.image_url && <img className="w-75" src={`${IMAGE_SERVER_URL}${post.image_url}`} alt="Post" />}
       </p>
       <div>
         <button className="btn btn-light btn-sm" onClick={() => handleLikeClick(post.id)}><i className="bi bi-heart"></i> { (post.likes && post.likes.length == 0) ? <>Like</> : <>Likes {post.likes && post.likes.length}</> } </button>

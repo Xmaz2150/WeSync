@@ -75,7 +75,6 @@ jobs:
                 -e IS_SU=${{ secrets.IS_SU }} \
                 -e SECRET_KEY=${{ secrets.SECRET_KEY }} \
                 -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
-                --add-host ${{ secrets.DB_HOST }} \
                 -p 5000:5000 \
                 ${{ matrix.image_name }}:${{ matrix.version }}
             elif [ "${{ matrix.directory }}" == "frontend" ]; then

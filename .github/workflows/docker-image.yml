@@ -60,6 +60,12 @@ jobs:
 
             if [ "${{ matrix.directory }}" == "backend" ]; then
               docker run -d --name ${{ matrix.container_name }} \
+                -e ONLINE_STORAGE=${{ secrets.ONLINE_STORAGE }} \
+                -e DO_REGION=${{ secrets.DO_REGION }} \
+                -e DO_ENDPOINT=${{ secrets.DO_ENDPOINT }} \
+                -e DO_ACCESS_KEY=${{ secrets.DO_ACCESS_KEY }} \
+                -e DO_SECRET_KEY=${{ secrets.DO_SECRET_KEY }} \
+                -e DO_BUCKET_NAME=${{ secrets.DO_BUCKET_NAME }} \
                 -e WSYNC_PGSQL_USER=${{ secrets.WSYNC_PGSQL_USER }} \
                 -e WSYNC_PGSQL_PWD=${{ secrets.WSYNC_PGSQL_PWD }} \
                 -e WSYNC_PGSQL_HOST=${{ secrets.WSYNC_PGSQL_HOST }} \
@@ -74,6 +80,7 @@ jobs:
             elif [ "${{ matrix.directory }}" == "frontend" ]; then
               docker run -d --name ${{ matrix.container_name }} \
                 -e REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }} \
+                -e REACT_APP_CDN_URL=${{ secrets.REACT_APP_CDN_URL }}
                 -p 3000:3000 \
                 ${{ matrix.image_name }}:${{ matrix.version }}
             fi

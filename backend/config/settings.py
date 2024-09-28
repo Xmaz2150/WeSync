@@ -1,4 +1,5 @@
 from os import getenv
+
 """
     CONFIGURATIONS of the APPLICATION
     IMPORTANT ENV VARS Docs comming sooon!!

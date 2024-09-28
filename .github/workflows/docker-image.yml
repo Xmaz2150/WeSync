@@ -66,6 +66,7 @@ jobs:
                 -e DO_ACCESS_KEY=${{ secrets.DO_ACCESS_KEY }} \
                 -e DO_SECRET_KEY=${{ secrets.DO_SECRET_KEY }} \
                 -e DO_BUCKET_NAME=${{ secrets.DO_BUCKET_NAME }} \
+                -e POSTGRESQL_DATABASE_URI=${{ secrets.POSTGRESQL_DATABASE_URI }} \
                 -e WSYNC_PGSQL_USER=${{ secrets.WSYNC_PGSQL_USER }} \
                 -e WSYNC_PGSQL_PWD=${{ secrets.WSYNC_PGSQL_PWD }} \
                 -e WSYNC_PGSQL_HOST=${{ secrets.WSYNC_PGSQL_HOST }} \

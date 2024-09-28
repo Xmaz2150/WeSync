@@ -37,7 +37,7 @@ class ImageStorage:
     def new_file_cdn(self, file_obj, image_type, file_name):
         self.__client.upload_fileobj(file_obj,
             BUCKET_NAME,
-            file_name,
+            'img/{}'.format(file_name),
             ExtraArgs={
                 'ACL': 'public-read',
                 'ContentType': image_type,

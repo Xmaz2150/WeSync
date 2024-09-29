@@ -15,10 +15,10 @@ import Following from "./pages/Following";
 import SearchUsers from "./pages/SearchUsers";
 import UpdateProfile from "./pages/UpdateProfile";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import NotFound from "./components/errors/NotFound";
 
-import Sidebar
-from "./components/SideBar";
+import Sidebar from "./components/SideBar";
 import PrivateRoute from "./components/PrivateRoute";
 import '../src/assets/css/custom-styles.css';
 

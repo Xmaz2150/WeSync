@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/css/sign-in.css';
 import '../assets/css/custom-styles.css';
 

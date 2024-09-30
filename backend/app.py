@@ -72,10 +72,6 @@ def on_connect():
 def on_disconnect():
     print('Someone disconnected!')
 
-@socketio.on('create-something')
-def on_create_something(data):
-    emit('foo', data, broadcast=True)
-
 
 if __name__ == "__main__":
-    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
+    socketio.run(app, host='0.0.0.0', port=5000, allow_unsafe_werkzeug=True)

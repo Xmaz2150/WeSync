@@ -4,7 +4,7 @@ import SignInForm from '../components/SignInForm';
 
 import { IMAGE_SERVER_URL } from '../utils/api';
 
-const Login = ({ setToken, setImageUrl }) => {
+const Login = ({ setToken, setImageUrl, socket }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -13,15 +13,21 @@ const Login = ({ setToken, setImageUrl }) => {
     event.preventDefault();
     try {
       const response = await login({ email, password });
+
       const { access_token, image_url } = response.data;
       localStorage.setItem('token', access_token);
+
       const imageUrl = `${IMAGE_SERVER_URL}${image_url}`;
       localStorage.setItem('imageUrl', imageUrl);
+
       setToken(access_token);
       setImageUrl(imageUrl);
       console.log('Signed in successfully:', response);
       console.log(imageUrl);
-      // redirect to profile
+
+      /* Alert users that i joined */
+      socket.timeout(5000).emit('create-something', 'Hello World!! I just joined', () => {});
+
       window.location.href = '/profile';
     } catch (error) {
       console.log('Failed to sign in:', error);

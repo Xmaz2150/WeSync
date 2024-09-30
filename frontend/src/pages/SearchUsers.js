@@ -4,7 +4,7 @@ import { followUser, unfollowUser, queryUsers } from '../utils/api';
 
 import '../assets/css/custom-styles.css';
 
-const SearchUsers = () => {
+const SearchUsers = ({ socket }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [error, setError] = useState(null);

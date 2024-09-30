@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { addNewComment } from '../utils/api';
 
-const NewComment = () => {
+const NewComment = ({ socket }) => {
   const { postId } = useParams();
   const [content, setContent] = useState('');
   const navigate = useNavigate();

@@ -7,7 +7,7 @@ import { removeFollower, allFollowers } from '../utils/api';
 
 import '../assets/css/custom-styles.css';
 
-const Followers = () => {
+const Followers = ({ socket }) => {
   const { userId } = useParams();
   const [followers, setFollowers] = useState([]);
   const [error, setError] = useState(null);

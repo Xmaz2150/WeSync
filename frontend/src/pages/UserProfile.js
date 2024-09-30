@@ -7,7 +7,7 @@ import { IMAGE_SERVER_URL } from '../utils/api';
 
 import '../assets/css/profile.css';
 
-const UserProfile = () => {
+const UserProfile = ({ socket }) => {
 
   const { userId } = useParams();
   const [user, setUser] = useState(null);

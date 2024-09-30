@@ -8,7 +8,7 @@ import { CommentPic, CommentUserSection } from '../components/UserSection';
 import '../assets/css/feed.css';
 import '../assets/css/custom-styles.css';
 
-const CommentsPage = () => {
+const CommentsPage = ({ socket }) => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);

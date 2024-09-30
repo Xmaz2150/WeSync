@@ -1,6 +1,8 @@
 import React from "react";
 import { Link, Routes, Route } from "react-router-dom";
 
+import { socket } from './socket';
+
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import UserProfile from "./pages/UserProfile";
@@ -27,27 +29,41 @@ function App() {
   const [token, setToken] = React.useState(localStorage.getItem('token'));
   const [imageUrl, setImageUrl] = React.useState(localStorage.getItem('imageUrl'));
 
+  const [fooEvents, setFooEvents] = React.useState([]);
+
+  React.useEffect(() => {
+    function onFooEvent(value) {
+      setFooEvents(previous => [...previous, value]);
+    }
+
+    socket.on('foo', onFooEvent);
+
+    return () => {
+      socket.off('foo', onFooEvent);
+    };
+  }, []);
+
   return (
     <div className="app-container d-flex general-style">
-      { token && <Sidebar token={token} setToken={setToken} imageUrl={imageUrl} setImageUrl={setImageUrl}/> }
+      { token && <Sidebar token={token} setToken={setToken} imageUrl={imageUrl} setImageUrl={setImageUrl} socket={socket}/> }
       <Routes>
-        <Route path="/signin" element={<SignIn setToken={setToken} setImageUrl={setImageUrl}/>} />
+        <Route path="/signin" element={<SignIn setToken={setToken} setImageUrl={setImageUrl} socket={socket}/>} />
         <Route path="/signup" element={<SignUp setToken={setToken}/>} />
 
-        <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
-        <Route path="/profile" element={<PrivateRoute><Profile imageUrl={imageUrl}/></PrivateRoute>} />
-        <Route path="/user/:userId" element={<PrivateRoute><UserProfile /></PrivateRoute>} />
+        <Route path="/" element={<PrivateRoute><Home events={fooEvents}/></PrivateRoute>} />
+        <Route path="/profile" element={<PrivateRoute><Profile imageUrl={imageUrl} socket={socket}/></PrivateRoute>} />
+        <Route path="/user/:userId" element={<PrivateRoute><UserProfile socket={socket}/></PrivateRoute>} />
 
-        <Route path="/feed" element={<PrivateRoute><Feed /></PrivateRoute>} />
-        <Route path="/newpost" element={<PrivateRoute><NewPost /></PrivateRoute>} />
-        <Route path="/newcomment/:postId" element={<PrivateRoute><NewComment /></PrivateRoute>} />
-        <Route path="/comments/:postId" element={<PrivateRoute><CommentsPage /></PrivateRoute>} />
+        <Route path="/feed" element={<PrivateRoute><Feed socket={socket}/></PrivateRoute>} />
+        <Route path="/newpost" element={<PrivateRoute><NewPost socket={socket}/></PrivateRoute>} />
+        <Route path="/newcomment/:postId" element={<PrivateRoute><NewComment socket={socket}/></PrivateRoute>} />
+        <Route path="/comments/:postId" element={<PrivateRoute><CommentsPage socket={socket}/></PrivateRoute>} />
 
-        <Route path="/followers/:userId" element={<PrivateRoute><Followers /></PrivateRoute>} />
-        <Route path="/following/:userId" element={<PrivateRoute><Following /></PrivateRoute>} />\
+        <Route path="/followers/:userId" element={<PrivateRoute><Followers socket={socket}/></PrivateRoute>} />
+        <Route path="/following/:userId" element={<PrivateRoute><Following socket={socket}/></PrivateRoute>} />
 
-        <Route path="/searchUsers/" element={<PrivateRoute><SearchUsers /></PrivateRoute>} />
-        <Route path="/updateProfile/" element={<PrivateRoute><UpdateProfile /></PrivateRoute>} />
+        <Route path="/searchUsers/" element={<PrivateRoute><SearchUsers socket={socket}/></PrivateRoute>} />
+        <Route path="/updateProfile/" element={<PrivateRoute><UpdateProfile socket={socket}/></PrivateRoute>} />
 
         <Route path="*" element={<PrivateRoute><NotFound statusCode={404} message={'Page not found!'}/></PrivateRoute>} />
       </Routes>

@@ -6,7 +6,7 @@ import { allFeeds } from '../utils/api';
 import '../assets/css/feed.css';
 
 
-const Feed = () => {
+const Feed = ({ socket }) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {

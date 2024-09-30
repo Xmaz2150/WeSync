@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
 
-const Sidebar = ({ token, setToken, imageUrl, setImageUrl }) => {
+const Sidebar = ({ token, setToken, imageUrl, setImageUrl, socket }) => {
   const handleSignOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('ImageUrl');

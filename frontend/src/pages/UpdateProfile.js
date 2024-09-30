@@ -9,7 +9,7 @@ const UpdateProfile = () => {
   const [bio, setBio] = useState('');
   const [city, setCity] = useState('');
 
-  const navigate = useNavigate();
+  const navigate = useNavigate({ socket });
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);

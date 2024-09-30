@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { addNewPost, addNewPostWithPicture } from '../utils/api';
 
-const NewPost = () => {
+const NewPost = ({ socket }) => {
   const [file, setFile] = useState(null);
   const [content, setContent] = useState('');
   const navigate = useNavigate();

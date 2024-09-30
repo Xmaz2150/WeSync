@@ -3,7 +3,7 @@ import { getProfile } from '../utils/api';
 import ProfileComponent from '../components/ProfileComponent';
 import '../assets/css/profile.css';
 
-const Profile = (imageUrl) => {
+const Profile = ({ imageUrl, socket }) => {
 
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);

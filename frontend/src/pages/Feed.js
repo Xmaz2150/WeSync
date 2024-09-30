@@ -21,7 +21,29 @@ const Feed = ({ socket }) => {
     };
 
     fetchFeed();
-  }, []);
+
+    const handleNewPost = (post) => {
+      console.log('new post', post);
+      setPosts((prevPosts) => [post, ...prevPosts]);
+    };
+
+    const handleLikeUpdate = (likeData) => {
+      console.log('liked post', likeData);
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post.id === likeData.post_id ? { ...post, likes: likeData.likes } : post
+        )
+      );
+    };
+
+    socket.on('new_post', handleNewPost);
+    socket.on('liked_post', handleLikeUpdate);
+
+    return () => {
+      socket.off('new_post', handleNewPost);
+      socket.off('liked_post', handleLikeUpdate);
+    };
+  }, [socket]);
 
   if (!posts) {
     return <div>

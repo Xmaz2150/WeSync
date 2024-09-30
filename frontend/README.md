@@ -1,4 +1,3 @@
-```md
 # WeSync Frontend
 
 Welcome to the frontend of WeSync, a social networking platform that allows users to connect with friends and the world around them. This project is built using React and integrates with a Flask backend.

@@ -9,6 +9,7 @@ from views import platform_views
 from flask_jwt_extended import jwt_required, get_jwt, current_user
 from views.helpers import role_required
 
+
 """
     ADMIN
 """
@@ -59,6 +60,22 @@ def create_post():
         new_post.save()
     else:
         new_post.save()
+
+    post_data = {
+        'user_data': {
+            'id': current_user.id,
+            'username': current_user.username,
+            'image_url': current_user.image_url,
+        },
+        'id': new_post.id,
+        'content': new_post.content,
+        'image_url': new_post.image_url,
+        'created_at': new_post.created_at.isoformat(),
+    }
+
+    from app import socketio
+
+    socketio.emit('new_post', post_data, namespace='/')
 
     return jsonify({
         'id': new_post.id,
@@ -189,6 +206,17 @@ def like_post(post_id):
         post_id = post_id,
     )
     new_like.save()
+
+    updated_likes = [l.to_dict() for l in storage.all(Like).values() if l.post_id == post.id]
+
+    like_data = {
+        'post_id': post_id,
+        'likes': updated_likes
+    }
+
+    from app import socketio
+
+    socketio.emit('liked_post', like_data, namespace='/')
 
     return jsonify({"message": "Post liked successfully!"}), 201
 

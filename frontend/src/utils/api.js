@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost';
+export const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost';
 const IMAGE_URL_PREFIX = process.env.REACT_APP_IMG_URL_PREFIX || '/wesync/img';
 
 const API_BASE_URL = `${BASE_URL}:5000/wesync`;

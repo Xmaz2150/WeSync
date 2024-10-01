@@ -26,7 +26,7 @@ const Profile = ({ imageUrl, socket }) => {
   if (!user) {
     return <div>Loading...</div>;
   }
-  return <ProfileComponent user={user} imageUrl={imageUrl.imageUrl} isUser={true} />;
+  return <ProfileComponent user={user} imageUrl={imageUrl} isUser={true} />;
 };
 
 export default Profile;

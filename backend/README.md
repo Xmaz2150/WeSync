@@ -1,7 +1,6 @@
 # WeSync API
 Welcome consumer!!
 
-
 ## Table of Contents
 - [API Endpoints](#api-endpoints)
 - [Image Server](#image-server)

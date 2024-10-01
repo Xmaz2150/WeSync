@@ -38,8 +38,7 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker build . --file ${{ matrix.dockerfile }} \
-            --tag ${{ matrix.image_name }}:${{ matrix.version }} \
-            --build-arg GUNICORN_BIND_IP=${{ secrets.REACT_APP_API_URL }}
+            --tag ${{ matrix.image_name }}:${{ matrix.version }}
 
           docker push ${{ matrix.image_name }}:${{ matrix.version }}
 
@@ -73,6 +72,7 @@ jobs:
                 -e WSYNC_ENV=${{ secrets.WSYNC_ENV }} \
                 -e SECRET_KEY=${{ secrets.SECRET_KEY }} \
                 -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
+                -e GUNICORN_BIND_IP=${{ secrets.REACT_APP_API_URL }} \
                 -p 5000:5000 \
                 ${{ matrix.image_name }}:${{ matrix.version }}
             elif [ "${{ matrix.directory }}" == "frontend" ]; then

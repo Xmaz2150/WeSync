@@ -14,7 +14,7 @@ WORKDIR /app/backend
 RUN pip install --no-cache-dir -r requirements.txt
 
 #
-ARG GUNICORN_BIND_IP="0.0.0.0"
+ENV GUNICORN_BIND_IP="0.0.0.0"
 
 # Expose the ports for Flask
 EXPOSE 5000

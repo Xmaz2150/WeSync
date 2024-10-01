@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import { updateProfileWithPic, updateProfile } from '../utils/api';
 
-const UpdateProfile = () => {
+const UpdateProfile = ({ socket }) => {
   const [file, setFile] = useState(null);
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
   const [city, setCity] = useState('');
 
-  const navigate = useNavigate({ socket });
+  const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);

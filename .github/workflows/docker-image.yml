@@ -79,7 +79,7 @@ jobs:
               docker run -d --name ${{ matrix.container_name }} \
                 -e REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }} \
                 -e REACT_APP_CDN_URL=${{ secrets.REACT_APP_CDN_URL }} \
-                -e REACT_APP_WS_SERVER=${{ secrets.GUNICORN_BIND_IP }} \
+                -e REACT_APP_WS_SERVER=${{ secrets.REACT_APP_WS_SERVER }} \
                 -p 3000:3000 \
                 ${{ matrix.image_name }}:${{ matrix.version }}
             fi

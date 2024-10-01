@@ -18,6 +18,8 @@ import SearchUsers from "./pages/SearchUsers";
 import UpdateProfile from "./pages/UpdateProfile";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 import NotFound from "./components/errors/NotFound";
 
 import Sidebar from "./components/SideBar";

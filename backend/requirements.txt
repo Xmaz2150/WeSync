@@ -5,3 +5,5 @@ psycopg2-binary
 flask_cors
 boto3
 flask_socketio
+gunicorn
+eventlet

@@ -37,7 +37,10 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build . --file ${{ matrix.dockerfile }} --tag ${{ matrix.image_name }}:${{ matrix.version }}
+          docker build . --file ${{ matrix.dockerfile }} \
+            --tag ${{ matrix.image_name }}:${{ matrix.version }} \
+            --build-arg GUNICORN_BIND_IP=${{ secrets.REACT_APP_API_URL }}
+
           docker push ${{ matrix.image_name }}:${{ matrix.version }}
 
       - name: SSH into server and pull latest image

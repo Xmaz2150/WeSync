@@ -63,7 +63,7 @@ export const CommentUserSection = ({ user, time }) => {
 export const CommentPic = ({ user }) => {
   return (
     <img 
-      src={`${IMAGE_SERVER_URL}/${user.image_url}`} 
+      src={`${IMAGE_SERVER_URL}${user.image_url}`} 
       width="32" 
       height="32" 
       className="bd-placeholder-img flex-shrink-0 me-2 rounded" 

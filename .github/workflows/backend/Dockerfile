@@ -21,4 +21,4 @@ EXPOSE 5000
 
 # Command to run app using Gunicorn with eventlet
 
-CMD ["sh", "-c", "flask run"]
+CMD ["sh", "-c", "gunicorn -w 4 -k eventlet -b ${GUNICORN_BIND_IP}:5000 app:app"]

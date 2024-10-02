@@ -9,10 +9,10 @@ COPY frontend/ ./frontend/
 # Change to the frontend directory and install Node.js dependencies
 WORKDIR /app/frontend
 
-RUN npm install && npm install -g serve
+RUN npm install
 
 # Expose the port for React application
 EXPOSE 3000
 
 # Command to run both apps
-CMD ["sh", "-c", "serve -s build"]
+CMD ["sh", "-c", "npm run start"]
